@@ -3,9 +3,14 @@
 ## Requirements
 Node v4.2.x
 
-## How to build
+## How to deploy
 
-`$ node build-static`
+```bash
+$ git checkout gh-pages
+$ git merge master
+$ node build-static`
+$ git commit -am "Deploy gh-pages $(date +%Y-%m-%d:%H:%M)"
+```
 
 ## For development
 `$ npm run dev`
