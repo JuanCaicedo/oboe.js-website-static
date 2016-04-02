@@ -1,0 +1,55 @@
+<h1 id="download">Download</h1>
+<h2 id="versions">Versions</h2>
+<p>The latest stable version is <em>{{latestTag}}</em>. Older versions are also <a href="{{repo}}/releases">available via Github</a>.</p>
+<h2 id="node-js-and-browserify">Node.js and Browserify</h2>
+<p>Install <a href="http://www.npmjs.org/package/oboe">Oboe from NPM</a>:</p>
+<pre><code class="lang-bash">$ npm install oboe
+</code></pre>
+<p>Add <code>--save</code> if you want to keep Oboe as a dependency in your package.json file:</p>
+<pre><code class="lang-bash">$ npm install oboe --save
+</code></pre>
+<p>Once installed load as usual:</p>
+<pre><code class="lang-javascript">var oboe = require(&#39;oboe&#39;);
+</code></pre>
+<h2 id="downloading-manually-for-the-browser">Downloading manually for the Browser</h2>
+<p>Save one of these files:</p>
+<ul>
+<li><a href="{{releasedJs}}/oboe-browser.js">oboe-browser.js</a> for development </li>
+<li><a href="{{releasedJs}}/oboe-browser.min.js">oboe-browser.min.js</a> - minified for production. The size after gzip is 4.9k.</li>
+</ul>
+<h2 id="using-bower-package-manager">Using Bower package manager</h2>
+<p>You can fetch using <a href="http://bower.io/">Bower</a> like this:</p>
+<pre><code class="lang-bash">$ bower install oboe
+</code></pre>
+<h2 id="using-jam-package-manager">Using Jam package manager</h2>
+<p>Oboe.js is also <a href="http://jamjs.org/packages/#/details/oboe">available</a> through <a href="http://jamjs.org/">Jam</a>:</p>
+<pre><code class="lang-bash">$ jam install oboe
+</code></pre>
+<h2 id="loading-using-amd">Loading using AMD</h2>
+<p>If there is no AMD present, once the Oboe Javascript is loaded you can start 
+using the global <code>oboe</code> object. However, when AMD is detected Oboe <code>defines</code> itself instead 
+of adding itself as global variable.</p>
+<p>When AMD is used Oboe can be accessed asynchronously using <code>require</code>:</p>
+<pre><code class="lang-javascript">require( [&#39;oboe&#39;], function( oboe ) {
+
+});
+</code></pre>
+<p>If you know Oboe has already been loaded you can also access it synchronously although this
+is usually not the best way:</p>
+<pre><code class="lang-javascript">var oboe = require(&#39;oboe&#39;);
+</code></pre>
+<h2 id="configuration-for-require-js">Configuration for Require.js</h2>
+<p>When using with Require.js some config is needed so Require knows to load a file
+named <code>oboe-browser.js</code> for the <code>oboe</code> module. Alternatively, you could rename
+<code>oboe-browser.js</code> to <code>oboe.js</code>.</p>
+<pre><code class="lang-javascript">require.config({
+    paths: {
+        oboe: &#39;oboe-browser&#39;
+    }
+});
+</code></pre>
+<p>This is similar to the <a href="http://requirejs.org/docs/jquery.html">config required to use jQuery with Require</a>.</p>
+<h2 id="polyfills">Polyfills</h2>
+<p>If you need Oboe to work with older versions of Internet Explorer polyfils such as
+<a href="http://github.com/es-shims/es5-shim">ES5-shim</a> are required to bring the environment
+up to ECMAScript 5.</p>
