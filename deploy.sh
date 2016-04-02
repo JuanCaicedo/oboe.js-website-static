@@ -1,4 +1,5 @@
-et -o errexit #abort if any command fails
+#!/usr/bin/env bash
+set -o errexit #abort if any command fails
 me=$(basename "$0")
 
 help_message="\
