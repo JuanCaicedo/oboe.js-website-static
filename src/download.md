@@ -1,3 +1,7 @@
+---
+layout: page.handlebars
+---
+
 Download
 ========
 
@@ -31,10 +35,10 @@ Downloading manually for the Browser
 -----------------------------------
 
 Save one of these files:
- 
- * [oboe-browser.js]({{releasedJs}}/oboe-browser.js) for development 
+
+ * [oboe-browser.js]({{releasedJs}}/oboe-browser.js) for development
  * [oboe-browser.min.js]({{releasedJs}}/oboe-browser.min.js) - minified for production. The size after gzip is 4.9k.
-  
+
 Using Bower package manager
 -----------
 
@@ -56,15 +60,15 @@ $ jam install oboe
 Loading using AMD
 -----------------
 
-If there is no AMD present, once the Oboe Javascript is loaded you can start 
-using the global `oboe` object. However, when AMD is detected Oboe `defines` itself instead 
+If there is no AMD present, once the Oboe Javascript is loaded you can start
+using the global `oboe` object. However, when AMD is detected Oboe `defines` itself instead
 of adding itself as global variable.
 
 When AMD is used Oboe can be accessed asynchronously using `require`:
 
 ``` javascript
 require( ['oboe'], function( oboe ) {
-   
+
 });
 ```
 

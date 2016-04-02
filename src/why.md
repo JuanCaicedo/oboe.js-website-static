@@ -1,7 +1,11 @@
+---
+layout: page.handlebars
+---
+
 Why Oboe.js?
 ============
 
-This page was written to show how streaming can speed up applications. The examples 
+This page was written to show how streaming can speed up applications. The examples
 illustrated show web interfaces using AJAX to pull in new data but the same techniques
 would apply equally well anywhere that REST is used.
 
@@ -15,9 +19,9 @@ The page isn't updated until the response completes:
 {{demo "fast-ajax-discrete"}}
 
 Oboe is different from most streaming JSON libraries since the JSON
-does not have to follow a special format. 
-On a good connection there isn't a lot of time to save but 
-it is likely that [progressive display in itself will improve the *perception* of 
+does not have to follow a special format.
+On a good connection there isn't a lot of time to save but
+it is likely that [progressive display in itself will improve the *perception* of
 performance](http://www.sigchi.org/chi95/proceedings/shortppr/egd_bdy.htm):
 
 {{demo "fast-ajax-progressive"}}
@@ -36,7 +40,7 @@ below approximates a medium-sized download on a mobile network:
 
 {{demo "mobile-discrete"}}
 
-Oboe.js makes it easy for the programmer to use chunks from the response as soon 
+Oboe.js makes it easy for the programmer to use chunks from the response as soon
 as they arrive. This helps webapps to feel faster when running over mobile networks:
 
 
@@ -52,7 +56,7 @@ the partially transferred data, even if 90% was received correctly.
 
 We can handle this situation better by using the partially transferred data
 instead of throwing it away. Given an incremental approach to parsing, using partial data
-follows naturally without requiring any extra programming. 
+follows naturally without requiring any extra programming.
 
 In the next visualisation we have a mobile connection which fails when the
 user enters a building:
@@ -80,28 +84,28 @@ The visualisation below shows an example without streaming.
 <span class="server2">Origin 1</span> is slower
 than
 <span class="server1">Origin 2</span>
-but the 
+but the
 <span class="aggregator">aggregator</span> is forced to respond at the speed of
 <span class="server2">the slowest service</span>:
 
 {{demo "aggregated-discrete"}}
 
 We can speed this scenario up by using Oboe.js to load data in
-<span class="aggregator">the aggregator</span> and 
+<span class="aggregator">the aggregator</span> and
 <span class="place">the client</span>.
-The aggregator dispatches the data as soon as it has it and 
+The aggregator dispatches the data as soon as it has it and
 the client displays the data as soon as it is arrives.
 
 {{demo "aggregated-progressive"}}
 
-Despite being a stream, 
+Despite being a stream,
 <span class="aggregator">the aggregator's</span>
-output is 100% valid JSON so it remains compatible 
+output is 100% valid JSON so it remains compatible
 with standard AJAX tools. A client using a streaming parser like Oboe.js
-consumes the resource as a stream but a more traditional client has no 
+consumes the resource as a stream but a more traditional client has no
 problem reading it as a static resource.
 
-In a Java stack this could also be implemented by using 
+In a Java stack this could also be implemented by using
 [GSON](http://code.google.com/p/google-gson/) in the middle tier.
 
 Step outside the trade-off between big and small JSON
@@ -116,7 +120,7 @@ There is often a tradeoff using traditional REST clients:
 
 Oboe.js breaks out of the tradeoff by beating both.
 Large resources load just as responsively as smaller ones so the developer can request more
-and let it stream. 
+and let it stream.
 
 In the visualisation below three rival clients
 connect to <span class="place">the same server</span>. The
@@ -174,12 +178,11 @@ What downsides?
 
 Because it is a pure Javascript parser, Oboe.js requires more CPU time
 than JSON.parse. Oboe.js works marginally more
-slowly for small messages that load very quickly 
+slowly for small messages that load very quickly
 but for most real-world cases using i/o effectively beats optimising CPU time.
 
 SAX parsers require less memory than Oboe's pattern-based parsing model because
-they do not build up a parse tree. See [Oboe.js vs SAX vs DOM](parsers). 
+they do not build up a parse tree. See [Oboe.js vs SAX vs DOM](parsers).
 
 If in doubt, benchmark, but don't forget to
 use the real internet, including mobile, and think about perceptual performance.
-

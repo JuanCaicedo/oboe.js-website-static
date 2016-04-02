@@ -1,15 +1,19 @@
+---
+layout: page.handlebars
+---
+
 # API
 
 The oboe function
 ---------------
 
 Oboe.js exposes only one function, `oboe`, which is used to instantiate a new Oboe instance.
-Calling this function starts a new HTTP request unless the caller is 
+Calling this function starts a new HTTP request unless the caller is
 [managing the stream themselves](#byo-stream).
 
 ```js
 oboe( String url )
-      
+
 oboe({
    url: String,
    method: String,          // optional
@@ -21,7 +25,7 @@ oboe({
 ```
 
 ```js
-// the doMethod style of calling is deprecated 
+// the doMethod style of calling is deprecated
 // and will be removed in v2.0.0:
 oboe.doGet(    url )
 oboe.doDelete( url )
@@ -39,7 +43,7 @@ oboe.doPatch(  {url:String, headers:Object, cached:Boolean, body:String|Object} 
 The `method`, `headers`, `body`, `cached`, and `withCredentials` arguments are optional.
 
 * If `method` is not given Oboe defaults to `GET`.
-* If `body` is given as an object it will be stringified using `JSON.stringify` 
+* If `body` is given as an object it will be stringified using `JSON.stringify`
 prior to sending. The Content-Type request header will automatically be set to `text/json`
 unless a different value is explicitly given.
 * If the cached option is given as `false` cachebusting will be applied by
@@ -56,7 +60,7 @@ response header.
 
 * If `withCredentials` is given as `true`, cookies and other auth will be propagated to
 cross-domain requests as per the [XHR spec](http://www.w3.org/TR/2014/WD-XMLHttpRequest-20140130/#the-withcredentials-attribute).
-For this to work the server must be set up to send the 
+For this to work the server must be set up to send the
 [Access-Control-Allow-Credentials](http://developer.mozilla.org/en/docs/HTTP/Access_control_CORS#Access-Control-Allow-Credentials)
 response header.
 
@@ -72,20 +76,20 @@ BYO stream
 Under Node.js you may also pass `oboe` an arbitrary
 [ReadableStream](http://nodejs.org/api/stream.html#stream_class_stream_readable)
 for it to read JSON from.
-It is your responsibility to initiate the stream and Oboe will not start 
+It is your responsibility to initiate the stream and Oboe will not start
 a new HTTP request on your behalf.
 
 ```js
 oboe( stream )   // Node.js only
 ```
- 
+
 node event
 ----------
 
-The methods `.node()` and `.on()` are used to register interest in particular nodes by providing 
-JSONPath patterns. As the JSON stream is parsed the Oboe instance checks for matches 
+The methods `.node()` and `.on()` are used to register interest in particular nodes by providing
+JSONPath patterns. As the JSON stream is parsed the Oboe instance checks for matches
 against these patterns and when a matching node is found it emits a `node` event.
- 
+
 ```js
 .on('node', pattern, callback)
 
@@ -102,9 +106,9 @@ against these patterns and when a matching node is found it emits a `node` event
 ```
 
 When the callback is notified, the context, `this`, is the Oboe instance,
-unless it is bound otherwise. The callback receives three parameters: 
+unless it is bound otherwise. The callback receives three parameters:
 
-|             |              |     
+|             |              |
 |-------------|--------------|
 | `node`      | The node that was found in the JSON stream. This can be any valid JSON type - `Array`, `Object`, `String`, `Boolean` or `null`
 | `path`      | An array of strings describing the path from the root of the JSON to the matching item. For example, if the match is at `(root).foo.bar` this array will equal `['foo', 'bar']`. [Example usage](examples#taking-meaning-from-a-node-s-location).
@@ -126,9 +130,9 @@ See [demarshalling to an OOP model](examples#demarshalling-json-to-an-oop-model)
 and [Transforming JSON while it is streaming](examples#transforming-json-while-it-is-streaming).
 
 ```js
-// Replace any object with a name, date of birth, and address 
+// Replace any object with a name, date of birth, and address
 // in the JSON with a Person instance
-  
+
 .on('node', '{name dob address}', function(personJson){
    return new Person(personJson.name, personJson.dob, personJson.address);
 })
@@ -143,7 +147,7 @@ from the tree.
 This can be used to ignore fields that you don't care about,
 or to [load large JSON without running out of memory]().
 
-```js  
+```js
 .on('node', 'person.address', function(address){
    console.log("I don't care what's at", address);
    return oboe.drop;
@@ -152,11 +156,11 @@ or to [load large JSON without running out of memory]().
 
 ```oboe.drop``` can also be used in a shorthand form:
 
-```js  
+```js
 .on('node', 'person.address', oboe.drop)
 ```
 
-Dropping from an *array* will result in 
+Dropping from an *array* will result in
 [an array with holes in it](http://speakingjs.com/es5/ch18.html#_arrays_are_maps_not_tuples).
 This is intentional so that the array indices from the original JSON are preserved:
 
@@ -167,10 +171,10 @@ This is intentional so that the array indices from the original JSON are preserv
 oboe('names.json')
    .on('2', oboe.drop)
    .done(console.log)
-   
+
 // this logs:
 //    ['john', 'wendy', , 'victoria', 'harry']
-//    note the array hole 
+//    note the array hole
 ```
 
 Meanwhile, dropping from an *object* leaves no trace of the key/value pair:
@@ -182,9 +186,9 @@ Meanwhile, dropping from an *object* leaves no trace of the key/value pair:
 oboe('gameScores.json')
    .on('wendy', oboe.drop)
    .done(console.log)
-   
+
 // this logs:
-//    {'john':4, 'frank': 0, 'victoria': 9, 'harry': 2} 
+//    {'john':4, 'frank': 0, 'victoria': 9, 'harry': 2}
 ```
 
 path event
@@ -250,14 +254,14 @@ start event
 ```
 
 Start events are fired when Oboe
-has parsed the status code and the response headers but has not yet received any content 
+has parsed the status code and the response headers but has not yet received any content
 from the response body.
 
-The callback receives two parameters: 
+The callback receives two parameters:
 
-| name        | type     |                              
+| name        | type     |
 |-------------|----------|------------------------
-| `status`    | `Number` | HTTP status code 
+| `status`    | `Number` | HTTP status code
 | `headers`   | `Object` | Object of response headers
 
 ```js
@@ -274,7 +278,7 @@ fail event
 
 ```js
    .fail(callback)
-   
+
    .on('fail', callback)
 ```
 
@@ -287,18 +291,18 @@ Fetching a resource could fail for several reasons:
 
 The fail callback receives an object with four fields:
 
-| Field        | Meaning                                                 
+| Field        | Meaning
 |--------------|---------------------------------------------------------
-| `thrown`     | The error, if one was thrown                            
-| `statusCode` | The status code, if the request got that far            
-| `body`       | The response body for the error, if any                 
+| `thrown`     | The error, if one was thrown
+| `statusCode` | The status code, if the request got that far
+| `body`       | The response body for the error, if any
 | `jsonBody`   | If the server's error response was JSON, the parsed body
 
 ```js
 oboe('/content')
    .fail( function( errorReport ){
       if( 404 == errorReport.statusCode ){
-         console.error('no such content'); 
+         console.error('no such content');
       }
    });
 ```
@@ -315,13 +319,13 @@ for several streams.
 ```js
 oboe('http://example.com/names.json')
    .node('name', handleName);
-   
+
 oboe('http://example.com/more_names.json')
-   .node('name', handleName);   
-   
+   .node('name', handleName);
+
 function handleName(name){
    console.log('got name', name, 'from', this.source);
-}   
+}
 ```
 
 .header([name])
@@ -337,7 +341,7 @@ function handleName(name){
 If the name parameter is given that named header will be returned as a String,
 otherwise all headers are returned as an Object.
 
-`undefined` wil be returned if the headers have not yet been received. The headers 
+`undefined` wil be returned if the headers have not yet been received. The headers
 are available anytime after the `start` event has been emitted. They will always be
 available from inside a `node`, `path`, `start` or `done` callback.
 
@@ -346,7 +350,7 @@ available from inside a `node`, `path`, `start` or `done` callback.
 ```js
 oboe('data.json')
    .node('id', function(id){
-      console.log(   'Server has id', id, 
+      console.log(   'Server has id', id,
                      'as of', this.headers('Date'));
    });
 ```
@@ -354,7 +358,7 @@ oboe('data.json')
 .root()
 -------
 
-At any time, call `.root()` on the oboe instance to get the JSON parsed so far. 
+At any time, call `.root()` on the oboe instance to get the JSON parsed so far.
 If nothing has yet been received this will return `undefined`.
 
 ```js
@@ -382,22 +386,22 @@ oboe('resourceUrl')
 ```
 
 `.forget()` is a shortcut for [.removeListener()](#-removelistener-) in
-the case where the listener to be removed is currently executing. 
-Calling `.forget()` on the Oboe instance from inside a `node` or `path` 
+the case where the listener to be removed is currently executing.
+Calling `.forget()` on the Oboe instance from inside a `node` or `path`
 callback de-registers that callback.
 
 ```js
 // Display only the first ten downloaded items
-// but place all in the model 
+// but place all in the model
 
 oboe('/content')
    .node('!.*', function(item, path){
       if( path[0] == 9 )
          this.forget();
-      
+
       displayItem(item);
    })
-   .node('!.*', function(item){   
+   .node('!.*', function(item){
       addToModel(item);
    });
 ```
@@ -427,8 +431,8 @@ has the advantage that it may be called from anywhere.
 .abort()
 --------
 
-Calling `.abort()` stops an ongoing HTTP call at any time. 
-You are guaranteed not to get any further `path` or `node` 
+Calling `.abort()` stops an ongoing HTTP call at any time.
+You are guaranteed not to get any further `path` or `node`
 callbacks, even if the underlying transport has unparsed buffered content.
 After calling `.abort()` the `done` event will not fire.
 
@@ -437,9 +441,9 @@ this method deregisters all listeners but it is the caller's responsibility to
 actually terminate the streaming.
 
 ```js
-// Display the first nine nodes, then hang up 
+// Display the first nine nodes, then hang up
 oboe('/content')
-   .node('!.*', function(item){   
+   .node('!.*', function(item){
       display(item);
    })
    .node('![9]', function(){
@@ -452,22 +456,22 @@ Pattern matching
 
 Oboe's pattern matching is a variation on [JSONPath](https://code.google.com/p/json-path/). It supports these clauses:
 
-| Clause         | Meaning             |     
+| Clause         | Meaning             |
 |----------------|---------------------|
-| `!`            | Root object                                                                                      
-| `.`            | Path separator                                                                                  
-| `person`       | An element under the key 'person'                                                               
-| `{name email}` | An element with attributes name and email                                                       
-| `*`            | Any element at any name                                                                         
-| `[2]`          | The second element (of an array)                                                                
-| `['foo']`      | Equivalent to .foo                                                                              
-| `[*]`          | Equivalent to .*                                                                                
+| `!`            | Root object
+| `.`            | Path separator
+| `person`       | An element under the key 'person'
+| `{name email}` | An element with attributes name and email
+| `*`            | Any element at any name
+| `[2]`          | The second element (of an array)
+| `['foo']`      | Equivalent to .foo
+| `[*]`          | Equivalent to .*
 | `..`           | Any number of intermediate nodes (non-greedy)
 | `$`            | Explicitly specify an intermediate clause in the jsonpath spec the callback should be applied to
 
-The pattern engine supports 
+The pattern engine supports
 [CSS-4 style node selection](/examples/#css4-style-patterns)
-using the dollar, `$`, symbol. See also [the example patterns](/examples/#example-patterns). 
+using the dollar, `$`, symbol. See also [the example patterns](/examples/#example-patterns).
 
 Browser support
 ---------------
@@ -482,14 +486,14 @@ These browsers have full support:
 These browsers will run Oboe but not stream:
 
 * Internet explorer 8 and 9, given [appropriate shims for ECMAScript 5](https://github.com/kriskowal/es5-shim/blob/master/es5-sham.js)
- 
-Unfortunately, <abbr title="Internet Explorer">IE</abbr> before version 10 
+
+Unfortunately, <abbr title="Internet Explorer">IE</abbr> before version 10
 [doesn't provide any convenient way to read an http request while it is in progress](http://blogs.msdn.com/b/ieinternals/archive/2010/04/06/comet-streaming-in-internet-explorer-with-xmlhttprequest-and-xdomainrequest.aspx).
 It may be possible to add support for limited streaming in Internet Explorer 8 and 9 using the proprietary
 [XDomainRequest](http://msdn.microsoft.com/en-us/library/cc288060%28VS.85%29.aspx)
 but this object is has a reduced API and is buggy -
 [only GET and POST are supported and it does not allow HTTP headers to be set](http://blogs.msdn.com/b/ieinternals/archive/2010/05/13/xdomainrequest-restrictions-limitations-and-workarounds.aspx).
-It also requires that responses set the `Access-Control-Allow-Origin` 
+It also requires that responses set the `Access-Control-Allow-Origin`
 header and fails in IE8 for users browsing using InPrivate mode.
 
 The good news is that in older versions of IE Oboe gracefully degrades.

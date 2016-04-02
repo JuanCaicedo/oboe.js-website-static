@@ -1,3 +1,7 @@
+---
+layout: page.handlebars
+---
+
 Streaming JSON loading for Node and browsers
 ============================================
 
@@ -10,15 +14,15 @@ doesn't have dependencies, and doesn't care which other libraries you need it to
 
 We can load trees [larger than the available memory](examples#loading-json-trees-larger-than-the-available-ram).
 Or we can [instantiate a classical OOP models from JSON](examples#demarshalling-json-to-an-oop-model),
-or [completely transform your JSON](examples#transforming-json-while-it-is-streaming) while it is being read. 
+or [completely transform your JSON](examples#transforming-json-while-it-is-streaming) while it is being read.
 
 {{demo "aggregated-progressive" "autoplay"}}
-   
+
 What next?
 ----------
 
-- Visualise [faster web applications through streaming](why) 
-- Browse [code examples](examples) 
+- Visualise [faster web applications through streaming](why)
+- Browse [code examples](examples)
 - Learn the Oboe.js [API](api)
 - [Download](download) the library
 - [Discuss](discuss) Oboe.js

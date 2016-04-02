@@ -1,3 +1,7 @@
+---
+layout: page.handlebars
+---
+
 Examples
 ========
 
@@ -11,11 +15,11 @@ towards progressive loading. The call style should be familiar to jQuery users.
 ``` js
 oboe('/myapp/things.json')
    .done(function(things) {
-   
+
       // we got it
    })
    .fail(function() {
-   
+
       // we don't got it
    });
 ```
@@ -45,21 +49,21 @@ without waiting for the whole download to complete.
 ``` js
 oboe('/myapp/things.json')
    .node('foods.*', function( foodThing ){
-   
+
       // This callback will be called everytime a new object is
       // found in the foods array.
 
       console.log( 'Go eat some', foodThing.name);
    })
    .node('badThings.*', function( badThing ){
-          
+
       console.log( 'Stay away from', badThing.name);
-   })   
+   })
    .done(function(things){
-   
+
       console.log(
          'there are', things.foods.length, 'things to eat',
-         'and', things.nonFoods.length, 'to avoid'); 
+         'and', things.nonFoods.length, 'to avoid');
    });
 ```
 
@@ -71,9 +75,9 @@ Sometimes it is easier to say *what you are trying to find* than *where you'd li
 
 ``` js
 oboe('/myapp/things.json')
-   .node('{name colour}', function( thing ) {   
-      // I'll be called for every object found that 
-      // has both a name and a colour   
+   .node('{name colour}', function( thing ) {
+      // I'll be called for every object found that
+      // has both a name and a colour
       console.log(thing.name, ' is ', thing.colour);
    };
 ```
@@ -92,7 +96,7 @@ download footprint.
 oboe('/myapp/things.json')
    .node({
       'foods.*': function( foodObject ){
-   
+
          alert('go ahead and eat some ' + foodObject.name);
       },
       'foods': function(){
@@ -105,7 +109,7 @@ oboe('/myapp/things.json')
 Detecting strings, numbers
 --------------------------
 
-Want to detect strings or numbers instead of objects? Oboe doesn't care about node 
+Want to detect strings or numbers instead of objects? Oboe doesn't care about node
 types so the syntax is the same:
 
 ``` js
@@ -115,14 +119,14 @@ oboe('/myapp/things.json')
          // (colour instanceof String) === true
       }
    });
-```  
+```
 
 Reacting before we get the whole object
 ---------------------------------------
 
 As well as `node` events, you can listen on `path` events which fire when
 locations in the JSON are found, before we know what will be found there.
-Here we eagerly create elements before we have their content 
+Here we eagerly create elements before we have their content
 so that the page updates as soon as possible:
 
 ``` js
@@ -158,15 +162,15 @@ Giving some visual feedback as a page is updating
 Suppose we're using progressive rendering to go to the next 'page' in a dashboard-style single page webapp
 and want to put some kind of indication on the page as individual modules load.
 
-We use a spinner to give visual feedback when an area of the page is loading and remove it 
+We use a spinner to give visual feedback when an area of the page is loading and remove it
 when we have the data for that area.
 
 ``` js
 // JSON from the server side:
 {
    'progress':[
-      'faster loading', 
-      'maintainable velocity', 
+      'faster loading',
+      'maintainable velocity',
       'more beer'
    ],
    'problems':[
@@ -197,8 +201,8 @@ oboe('/agileReport/sprint42')
       },
       '!.problems': function(){
          MyApp.hideSpinnerAt('#problems');
-      }      
-   });   
+      }
+   });
 ```
 
 Taking meaning from a node's location
@@ -207,30 +211,30 @@ Taking meaning from a node's location
 Node and path callbacks receive a description of where items are found
 as an array of strings describing the path from the JSON root.
 It is sometimes preferable to
-register a wide-matching pattern and use the item's location to 
+register a wide-matching pattern and use the item's location to
 decide programmatically what to do with it.
 
 ``` js
-// JSON data for homepage of a social networking site. 
+// JSON data for homepage of a social networking site.
 // Each top-level object is for a different module on the page.
 {  "notifications":{
       "newNotifications": 2,
       "totalNotifications": 8
    },
    "messages": [
-      {  "from":"Joe", 
-         "subject":"Wanna go fishing?", 
+      {  "from":"Joe",
+         "subject":"Wanna go fishing?",
          "url":"messages/1"
       },
-      {  "from":"Baz", 
+      {  "from":"Baz",
          "subject":"Hello",
          "url":"messages/2"
       }
    ],
    "photos": {
       "new": [
-         {  "title": "Birthday Party", 
-            "url":"/photos/5", 
+         {  "title": "Birthday Party",
+            "url":"/photos/5",
             "peopleTagged":["Joe","Baz"]
          }
       ]
@@ -241,14 +245,14 @@ decide programmatically what to do with it.
 ``` js
 oboe('http://mysocialsite.example.com/homepage')
    .node('!.*', function( moduleJson, path ){
-   
+
       // This callback will be called with every direct child
       // of the root object but not the sub-objects therein.
       // Because we're maching direct children of the root the
       // path argument is a single-element array with the module
       // name; it resembles ['messages'] or ['photos'].
       var moduleName = path[0];
-      
+
       My.App
          .getModuleCalled(moduleName)
          .showNewData(moduleJson);
@@ -264,23 +268,23 @@ Calling `this.forget()` from inside a callback deregisters that listener.
 ``` js
 
 // We have a list of items to plot on a map. We want to draw
-// the first ten while they're loading. After that we want 
-// to store the rest in a model to be drawn later. 
+// the first ten while they're loading. After that we want
+// to store the rest in a model to be drawn later.
 
 oboe('/listOfPlaces')
    .node('list.*', function( item, path ){
       var itemIndex = path[path.length-1];
-      
-      model.addItemToModel(item);      
+
+      model.addItemToModel(item);
       view.drawItem(item);
-              
+
       if( itemIndex == 10 ) {
          this.forget();
       }
    })
    .done(function( fullJson ){
       var undrawnItems = fullJson.list.slice(10);
-            
+
       model.addItemsToModel(undrawnItems);
    });
 ```
@@ -288,15 +292,15 @@ oboe('/listOfPlaces')
 Css4 style patterns
 -------------------
 
-Sometimes when downloading an array of items it isn't very useful to be given each element individually. 
-It is easier to integrate with libraries like [Angular](http://angularjs.org/) if you're given an array 
+Sometimes when downloading an array of items it isn't very useful to be given each element individually.
+It is easier to integrate with libraries like [Angular](http://angularjs.org/) if you're given an array
 repeatedly whenever a new element is concatenated onto it.
- 
-Oboe supports css4-style selectors and gives them much the same meaning as in the 
+
+Oboe supports css4-style selectors and gives them much the same meaning as in the
 [proposed css level 4 selector spec](http://www.w3.org/TR/2011/WD-selectors4-20110929/#subject).
 
 If a term is prefixed with a dollar sign, the node matching that term is explicitly selected,
-even if the pattern as a whole matches a node further down the tree. 
+even if the pattern as a whole matches a node further down the tree.
 
 ``` js
 // JSON
@@ -312,16 +316,16 @@ function PeopleListCtrl($scope) {
 
    oboe('/myapp/things')
       .node('$people[*]', function( peopleLoadedSoFar ){
-         
+
          // This callback will be called with a 1-length array,
-         // a 2-length array, a 3-length array etc until the 
+         // a 2-length array, a 3-length array etc until the
          // whole thing is loaded.
-         // Putting this array on the scope object under 
+         // Putting this array on the scope object under
          // Angular re-renders the list of people.
-         
+
          $scope.people = peopleLoadedSoFar;
       });
-}      
+}
 ```
 
 Like css4 stylesheets, this can also be used to express a 'containing' operator.
@@ -329,17 +333,17 @@ Like css4 stylesheets, this can also be used to express a 'containing' operator.
 ``` js
 oboe('/myapp/things')
    .node('people.$*.email', function(personWithAnEmailAddress){
-      
-      // here we'll be called back with baz 
+
+      // here we'll be called back with baz
       // and bax but not Boz.
-      
+
    });
 ```
 
 Transforming JSON while it is streaming
 ---------------------------------------
 
-Say we have the JSON below: 
+Say we have the JSON below:
 
 ``` js
 [
@@ -362,7 +366,7 @@ oboe('words.json')
    .node('verb', toLower)
    .node('noun', toLower)
    .node('!.*', function(pair){
-   
+
       console.log('Please', pair.verb, 'me some', pair.noun);
    });
 ```
@@ -373,14 +377,14 @@ The code above logs:
 Please visit me some shops
 Please find me some wine
 Please make me some pizza
-   
+
 ```
 
 Demarshalling JSON to an OOP model
 ----------------------------------
 
 If you are programming in an OO style you probably want to instantiate constructors
-based on the values you read from the JSON. 
+based on the values you read from the JSON.
 
 You can build the OOP model while streaming using Oboe's node replacement feature:
 
@@ -399,14 +403,14 @@ oboe('/myapp/people')
 
       // Any value we return from a node callback will replace
       // the parsed object:
-      
+
       return new Person(person.firstName, person.lastName)
    })
    .done(function(model){
-   
-      // We can call the .getFullName() method directly because the 
+
+      // We can call the .getFullName() method directly because the
       // model here contains Person instances, not plain JS objects
-      
+
       console.log( model.people[1].getFullName() );
    });
 ```
@@ -417,7 +421,7 @@ Loading JSON trees larger than the available RAM
 By default Oboe assembles the full tree of the JSON that it receives.
 This means that every node is kept in memory for the duration of the parse.
 
-If you are streaming large resources to avoid memory limitations, you can delete 
+If you are streaming large resources to avoid memory limitations, you can delete
 any detected node by returning `oboe.drop` from [the node event](api#node-event).
 
 ``` js
@@ -427,7 +431,7 @@ any detected node by returning `oboe.drop` from [the node event](api#node-event)
       {"name":"Orange juice", "ingredients":"Oranges"},
       {"name":"Wine", "ingredients":"Grapes"},
       {"name":"Coffee", "ingredients":"Roasted Beans"}
-      
+
       // ... lots more records ...
    ]
 }
@@ -436,19 +440,19 @@ any detected node by returning `oboe.drop` from [the node event](api#node-event)
 ``` js
 oboe('drinks.json')
    .node('!.*', function(drink){
-      
+
       if( available(drink.ingredients) ) {
          startMaking(drink.name);
       }
-      
+
       // By returning oboe.drop, the parsed JSON object will be freed,
       // allowing it to be garbage collected.
       return oboe.drop;
-      
+
    }).done(function( finalJson ){
-   
+
       // most of the nodes have been dropped
-      
+
       console.log( finalJson );  // logs: {"drinks":[]}
    })
 ```
@@ -460,7 +464,7 @@ oboe('drinks.json')
    // we don't care how the drink is made
    .node('ingredients', oboe.drop)
    .done(function( finalJson ){
-         
+
       console.log( finalJson.drinks );
       //  [ {"name":"Orange juice"}, {"name":"Wine"}, {"name":"Coffee"} ]}
    })
@@ -492,9 +496,9 @@ app.get('/foo', function(req, res){
 Using Oboe with d3.js
 ---------------------
 
-Oboe works very nicely with [d3.js](http://d3js.org/) to add content to 
+Oboe works very nicely with [d3.js](http://d3js.org/) to add content to
 a visualisation while the JSON downloads.
- 
+
 ``` js
 // get a (probably empty) d3 selection:
 var things = d3.selectAll('rect.thing');
@@ -505,7 +509,7 @@ var things = d3.selectAll('rect.thing');
 // should work for most d3 based visualistions.
 oboe('/data/things')
    .node('$things.*', function( thingsArray ){
-            
+
       things.data(thingsArray)
          .enter().append('svg:rect')
             .classed('thing', true)
@@ -513,7 +517,7 @@ oboe('/data/things')
             .attr(y, function(d){ return d.x })
             .attr(width, function(d){ return d.w })
             .attr(height, function(d){ return d.h })
-            
+
       // no need to handle update or exit set here since
       // downloading is purely additive
    });
@@ -534,13 +538,13 @@ oboe( fs.createReadStream( '/home/me/secretPlans.json' ) )
       },
       'plottings.*': function(deviousPlot){
          console.log('Hmmm! ' + deviousPlot);
-      }   
+      }
    })
    .on('done', function(){
       console.log("*twiddles mustache*");
    })
    .on('fail', function(){
-      console.log("Drat! Foiled again!");   
+      console.log("Drat! Foiled again!");
    });
 ```
 
@@ -549,21 +553,21 @@ the code is usually about the same length as with JSON.parse:
 
 ``` js
 fs.readFile('/home/me/secretPlans.json',
-   function(err, plansJson){     
+   function(err, plansJson){
       if(err) {
          console.log("Drat! Foiled again!");
          return;
       }
       var plans = JSON.parse(plansJson);
-      
+
       plans.schemes.forEach(function(scheme){
-         console.log('Aha! ' + scheme);   
-      });   
+         console.log('Aha! ' + scheme);
+      });
       plans.plottings.forEach(function(deviousPlot){
          console.log('Hmmm! ' + deviousPlot);
       });
-         
-      console.log("*twiddles mustache*");   
+
+      console.log("*twiddles mustache*");
    });
 ```
 
@@ -577,9 +581,9 @@ goes down you have a few options
  * If the new elements you added are useful without the rest, leave them. For example, in a web-based email client it is more useful to show some messages than none. See [dropped connections visualisation](why#demo-mobile-fail-progressive).
  * If they are useful but you need the rest, make a new request. If the service supports it you need only ask for the missing items.
  * Rollback any half-done changes.
- 
-The example below implements rollback. 
- 
+
+The example below implements rollback.
+
 ``` js
 var currentPersonElement;
 oboe('everyone')
@@ -591,14 +595,14 @@ oboe('everyone')
       $('#people').append(currentPersonElement);
    })
    .node('people.*.name', function( name ){
-      // we just found out that person's name, lets add it to 
+      // we just found out that person's name, lets add it to
       // their div:
       var markup = '<span class="name">' + name + '</span>';
       currentPersonElement.append(markup);
    })
    .fail(function(){
       if( currentPersonElement ) {
-         // oops, that didn't go so well. instead of leaving 
+         // oops, that didn't go so well. instead of leaving
          // this dude half on the page, remove them altogether
          currentPersonElement.remove();
       }
@@ -607,19 +611,19 @@ oboe('everyone')
 
 Example patterns
 ----------------
-  
+
 | Pattern                  | Meaning |
 |------------------------- |--------------|
-| `*`                      | Every object, string, number etc found in the json stream  
+| `*`                      | Every object, string, number etc found in the json stream
 | `!`                      | The root object. Fired when the whole response is available, like JSON.parse()
-| `!.foods.colour`         | The colours of the foods  
+| `!.foods.colour`         | The colours of the foods
 | `person.emails[1]`       | The first element in the email array for each person
-| `{name email}`           | Any object with a name and an email property, regardless of where it is in the document  
-| `person.emails[*]`       | Any element in the email array for each person  
-| `person.$emails[*]`      | Any element in the email array for each person, but the callback will be passed the array so far rather than the array elements as they are found.  
-| `person`                 | All people in the json, nested at any depth  
-| `person.friends.*.name`  | Detecting friend names in a social network  
-| `person.friends..{name}` | Detecting friends with names in a social network  
-| `person..email`          | Email addresses anywhere as descendant of a person object  
-| `person..{email}`        | Any object with an email address relating to a person in the stream  
-| `$person..email`         | Any person in the json stream with an email address  
+| `{name email}`           | Any object with a name and an email property, regardless of where it is in the document
+| `person.emails[*]`       | Any element in the email array for each person
+| `person.$emails[*]`      | Any element in the email array for each person, but the callback will be passed the array so far rather than the array elements as they are found.
+| `person`                 | All people in the json, nested at any depth
+| `person.friends.*.name`  | Detecting friend names in a social network
+| `person.friends..{name}` | Detecting friends with names in a social network
+| `person..email`          | Email addresses anywhere as descendant of a person object
+| `person..{email}`        | Any object with an email address relating to a person in the stream
+| `$person..email`         | Any person in the json stream with an email address

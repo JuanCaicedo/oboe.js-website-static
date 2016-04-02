@@ -1,3 +1,7 @@
+---
+layout: page.handlebars
+---
+
 TODO
 ====
 
@@ -53,7 +57,7 @@ Website
 * Add logos to footer
    * Travis
    * Nodejitsu
-* Nodejitsu 404s when updating. [Try out Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs).   
+* Nodejitsu 404s when updating. [Try out Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs).
 * Current style of menu is at limit of number of articles it can support
    * research other ways of doing it
 * Tab switch bug
@@ -103,4 +107,3 @@ What next?
 * Work full time perm?
 * Contracting
 * Move to the countryside and keep chickens?
-
