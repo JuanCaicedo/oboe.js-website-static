@@ -19,6 +19,8 @@
     "handlebars": "~1.1.2",
     "line-reader": "~0.2.3",
     "marked": "~0.2.10",
+    "metalsmith": "2.1.0",
+    "metalsmith-markdown": "0.2.1",
     "mustache": "~0.7.3",
     "oboe": "^2.0.2",
     "optimist": "~0.6.0",
@@ -27,7 +29,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "predeploy": "grunt build",
-    "start": "node index.js --env=prod"
+    "start": "node index.js --env=prod",
+    "dev": "nodemon -e js,md --exec 'node build-static.js'"
   },
   "repository": {
     "type": "git",
@@ -55,6 +58,9 @@
     "www.oboejs.org"
   ],
   "engines": {
-    "node": "0.10.x"
+    "node": "4.2.x"
+  },
+  "devDependencies": {
+    "nodemon": "1.9.1"
   }
 }
