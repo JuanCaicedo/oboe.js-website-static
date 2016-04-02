@@ -11,7 +11,7 @@ Metalsmith(__dirname)
     }
   }))
   .use(markdown())
-  .destination('./build')
+  .destination('./gh-pages')
   .use(permalinks({
     pattern: ':page'
   }))
