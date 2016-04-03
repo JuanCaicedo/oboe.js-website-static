@@ -1,7 +1,69 @@
-<h1 id="api">API</h1>
+<!DOCTYPE html>
+<html>
+    <head>
+
+       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+       <meta name="description" content="A streaming approach to JSON. Oboe.js is a Javascript library for Node.js and browsers that speeds up web applications by providing parsed objects before the response completes"/>
+
+       <meta name="keywords" content="json streaming node.js browsers"/>
+
+        <link rel="stylesheet" href="css/all.css">
+
+        <title> : Oboe.js</title>
+
+       <link rel="icon" type="image/png" href="/favicons/favicon-32.png" sizes="32x32">
+       <link rel="icon" type="image/png" href="/favicons/favicon-16.png" sizes="16x16">
+
+    </head>
+    <body >
+        <div id="header">
+        </div>
+        <nav id="siteNav">
+            <svg width="24" height="24" class="menuButton" >
+                <rect class="background" width="24" height="24" />
+                <rect class="rung" width="16" height="4" x="4" y="3"  />
+                <rect class="rung" width="16"  height="4" x="4" y="10"  />
+                <rect class="rung" width="16" height="4" x="4" y="17" />
+            </svg>
+           <ul>
+              
+              
+                  <li class="reducedLogo"><a href="/">Oboe.js</a></li>
+              
+
+              
+           </ul>
+        </nav>
+        <div id="pagearea">
+           <header class="row">
+              
+              
+                  <h1><a href="/">Oboe.js</a></h1>
+              
+
+              
+           </header>
+
+           <div class="row">
+
+              <nav class="col col1">
+
+                 
+
+                 
+                    
+                 
+
+                 
+              </nav>
+              <div class="col col2">
+
+                 <main class="marked">
+                    <h1 id="api">API</h1>
 <h2 id="the-oboe-function">The oboe function</h2>
 <p>Oboe.js exposes only one function, <code>oboe</code>, which is used to instantiate a new Oboe instance.
-Calling this function starts a new HTTP request unless the caller is 
+Calling this function starts a new HTTP request unless the caller is
 <a href="#byo-stream">managing the stream themselves</a>.</p>
 <pre><code class="lang-js">oboe( String url )
 
@@ -14,7 +76,7 @@ oboe({
    withCredentials: Boolean // optional, browser only
 })
 </code></pre>
-<pre><code class="lang-js">// the doMethod style of calling is deprecated 
+<pre><code class="lang-js">// the doMethod style of calling is deprecated
 // and will be removed in v2.0.0:
 oboe.doGet(    url )
 oboe.doDelete( url )
@@ -31,7 +93,7 @@ oboe.doPatch(  {url:String, headers:Object, cached:Boolean, body:String|Object} 
 <p>The <code>method</code>, <code>headers</code>, <code>body</code>, <code>cached</code>, and <code>withCredentials</code> arguments are optional.</p>
 <ul>
 <li>If <code>method</code> is not given Oboe defaults to <code>GET</code>.</li>
-<li>If <code>body</code> is given as an object it will be stringified using <code>JSON.stringify</code> 
+<li>If <code>body</code> is given as an object it will be stringified using <code>JSON.stringify</code>
 prior to sending. The Content-Type request header will automatically be set to <code>text/json</code>
 unless a different value is explicitly given.</li>
 <li>If the cached option is given as <code>false</code> cachebusting will be applied by
@@ -46,7 +108,7 @@ response header.</p>
 <ul>
 <li>If <code>withCredentials</code> is given as <code>true</code>, cookies and other auth will be propagated to
 cross-domain requests as per the <a href="http://www.w3.org/TR/2014/WD-XMLHttpRequest-20140130/#the-withcredentials-attribute">XHR spec</a>.
-For this to work the server must be set up to send the 
+For this to work the server must be set up to send the
 <a href="http://developer.mozilla.org/en/docs/HTTP/Access_control_CORS#Access-Control-Allow-Credentials">Access-Control-Allow-Credentials</a>
 response header.</li>
 </ul>
@@ -58,13 +120,13 @@ serving cross-domain requests from Express/Connect.</p>
 <p>Under Node.js you may also pass <code>oboe</code> an arbitrary
 <a href="http://nodejs.org/api/stream.html#stream_class_stream_readable">ReadableStream</a>
 for it to read JSON from.
-It is your responsibility to initiate the stream and Oboe will not start 
+It is your responsibility to initiate the stream and Oboe will not start
 a new HTTP request on your behalf.</p>
 <pre><code class="lang-js">oboe( stream )   // Node.js only
 </code></pre>
 <h2 id="node-event">node event</h2>
-<p>The methods <code>.node()</code> and <code>.on()</code> are used to register interest in particular nodes by providing 
-JSONPath patterns. As the JSON stream is parsed the Oboe instance checks for matches 
+<p>The methods <code>.node()</code> and <code>.on()</code> are used to register interest in particular nodes by providing
+JSONPath patterns. As the JSON stream is parsed the Oboe instance checks for matches
 against these patterns and when a matching node is found it emits a <code>node</code> event.</p>
 <pre><code class="lang-js">.on(&#39;node&#39;, pattern, callback)
 
@@ -80,7 +142,7 @@ against these patterns and when a matching node is found it emits a <code>node</
 });
 </code></pre>
 <p>When the callback is notified, the context, <code>this</code>, is the Oboe instance,
-unless it is bound otherwise. The callback receives three parameters: </p>
+unless it is bound otherwise. The callback receives three parameters:</p>
 <table>
 <thead>
 <tr>
@@ -112,7 +174,7 @@ unless it is bound otherwise. The callback receives three parameters: </p>
 <p>If the callback returns any value, the returned value will be used to replace the parsed JSON node.</p>
 <p>See <a href="examples#demarshalling-json-to-an-oop-model">demarshalling to an OOP model</a>
 and <a href="examples#transforming-json-while-it-is-streaming">Transforming JSON while it is streaming</a>.</p>
-<pre><code class="lang-js">// Replace any object with a name, date of birth, and address 
+<pre><code class="lang-js">// Replace any object with a name, date of birth, and address
 // in the JSON with a Person instance
 
 .on(&#39;node&#39;, &#39;{name dob address}&#39;, function(personJson){
@@ -132,7 +194,7 @@ or to <a href="">load large JSON without running out of memory</a>.</p>
 <p><code>oboe.drop</code> can also be used in a shorthand form:</p>
 <pre><code class="lang-js">.on(&#39;node&#39;, &#39;person.address&#39;, oboe.drop)
 </code></pre>
-<p>Dropping from an <em>array</em> will result in 
+<p>Dropping from an <em>array</em> will result in
 <a href="http://speakingjs.com/es5/ch18.html#_arrays_are_maps_not_tuples">an array with holes in it</a>.
 This is intentional so that the array indices from the original JSON are preserved:</p>
 <pre><code class="lang-js">// json from service is an array of names:
@@ -199,9 +261,9 @@ parsed JSON.</p>
 .on(&#39;start&#39;, callback)
 </code></pre>
 <p>Start events are fired when Oboe
-has parsed the status code and the response headers but has not yet received any content 
+has parsed the status code and the response headers but has not yet received any content
 from the response body.</p>
-<p>The callback receives two parameters: </p>
+<p>The callback receives two parameters:</p>
 <table>
 <thead>
 <tr>
@@ -213,7 +275,7 @@ from the response body.</p>
 <tr>
 <td><code>status</code></td>
 <td><code>Number</code></td>
-<td>HTTP status code </td>
+<td>HTTP status code</td>
 </tr>
 <tr>
 <td><code>headers</code></td>
@@ -245,21 +307,21 @@ from the response body.</p>
 <thead>
 <tr>
 <th>Field</th>
-<th>Meaning                                                 </th>
+<th>Meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>thrown</code></td>
-<td>The error, if one was thrown                            </td>
+<td>The error, if one was thrown</td>
 </tr>
 <tr>
 <td><code>statusCode</code></td>
-<td>The status code, if the request got that far            </td>
+<td>The status code, if the request got that far</td>
 </tr>
 <tr>
 <td><code>body</code></td>
-<td>The response body for the error, if any                 </td>
+<td>The response body for the error, if any</td>
 </tr>
 <tr>
 <td><code>jsonBody</code></td>
@@ -270,7 +332,7 @@ from the response body.</p>
 <pre><code class="lang-js">oboe(&#39;/content&#39;)
    .fail( function( errorReport ){
       if( 404 == errorReport.statusCode ){
-         console.error(&#39;no such content&#39;); 
+         console.error(&#39;no such content&#39;);
       }
    });
 </code></pre>
@@ -283,7 +345,7 @@ for several streams.</p>
    .node(&#39;name&#39;, handleName);
 
 oboe(&#39;http://example.com/more_names.json&#39;)
-   .node(&#39;name&#39;, handleName);   
+   .node(&#39;name&#39;, handleName);
 
 function handleName(name){
    console.log(&#39;got name&#39;, name, &#39;from&#39;, this.source);
@@ -297,18 +359,18 @@ function handleName(name){
 <p><code>.header()</code> returns one or more HTTP response headers.
 If the name parameter is given that named header will be returned as a String,
 otherwise all headers are returned as an Object.</p>
-<p><code>undefined</code> wil be returned if the headers have not yet been received. The headers 
+<p><code>undefined</code> wil be returned if the headers have not yet been received. The headers
 are available anytime after the <code>start</code> event has been emitted. They will always be
 available from inside a <code>node</code>, <code>path</code>, <code>start</code> or <code>done</code> callback.</p>
 <p><code>.header()</code> always returns undefined for non-HTTP streams.</p>
 <pre><code class="lang-js">oboe(&#39;data.json&#39;)
    .node(&#39;id&#39;, function(id){
-      console.log(   &#39;Server has id&#39;, id, 
+      console.log(   &#39;Server has id&#39;, id,
                      &#39;as of&#39;, this.headers(&#39;Date&#39;));
    });
 </code></pre>
 <h2 id="-root-">.root()</h2>
-<p>At any time, call <code>.root()</code> on the oboe instance to get the JSON parsed so far. 
+<p>At any time, call <code>.root()</code> on the oboe instance to get the JSON parsed so far.
 If nothing has yet been received this will return <code>undefined</code>.</p>
 <pre><code class="lang-js">var interval;
 
@@ -329,11 +391,11 @@ oboe(&#39;resourceUrl&#39;)
 })
 </code></pre>
 <p><code>.forget()</code> is a shortcut for <a href="#-removelistener-">.removeListener()</a> in
-the case where the listener to be removed is currently executing. 
-Calling <code>.forget()</code> on the Oboe instance from inside a <code>node</code> or <code>path</code> 
+the case where the listener to be removed is currently executing.
+Calling <code>.forget()</code> on the Oboe instance from inside a <code>node</code> or <code>path</code>
 callback de-registers that callback.</p>
 <pre><code class="lang-js">// Display only the first ten downloaded items
-// but place all in the model 
+// but place all in the model
 
 oboe(&#39;/content&#39;)
    .node(&#39;!.*&#39;, function(item, path){
@@ -342,7 +404,7 @@ oboe(&#39;/content&#39;)
 
       displayItem(item);
    })
-   .node(&#39;!.*&#39;, function(item){   
+   .node(&#39;!.*&#39;, function(item){
       addToModel(item);
    });
 </code></pre>
@@ -363,16 +425,16 @@ is usually more convenient because it does not require that the programmer store
 to the callback function. However, <code>.removeListener()</code>
 has the advantage that it may be called from anywhere.</p>
 <h2 id="-abort-">.abort()</h2>
-<p>Calling <code>.abort()</code> stops an ongoing HTTP call at any time. 
-You are guaranteed not to get any further <code>path</code> or <code>node</code> 
+<p>Calling <code>.abort()</code> stops an ongoing HTTP call at any time.
+You are guaranteed not to get any further <code>path</code> or <code>node</code>
 callbacks, even if the underlying transport has unparsed buffered content.
 After calling <code>.abort()</code> the <code>done</code> event will not fire.</p>
 <p>Under Node.js, if the Oboe instance is reading from a stream that it did not create
 this method deregisters all listeners but it is the caller&#39;s responsibility to
 actually terminate the streaming.</p>
-<pre><code class="lang-js">// Display the first nine nodes, then hang up 
+<pre><code class="lang-js">// Display the first nine nodes, then hang up
 oboe(&#39;/content&#39;)
-   .node(&#39;!.*&#39;, function(item){   
+   .node(&#39;!.*&#39;, function(item){
       display(item);
    })
    .node(&#39;![9]&#39;, function(){
@@ -391,35 +453,35 @@ oboe(&#39;/content&#39;)
 <tbody>
 <tr>
 <td><code>!</code></td>
-<td>Root object                                                                                      </td>
+<td>Root object</td>
 </tr>
 <tr>
 <td><code>.</code></td>
-<td>Path separator                                                                                  </td>
+<td>Path separator</td>
 </tr>
 <tr>
 <td><code>person</code></td>
-<td>An element under the key &#39;person&#39;                                                               </td>
+<td>An element under the key &#39;person&#39;</td>
 </tr>
 <tr>
 <td><code>{name email}</code></td>
-<td>An element with attributes name and email                                                       </td>
+<td>An element with attributes name and email</td>
 </tr>
 <tr>
 <td><code>*</code></td>
-<td>Any element at any name                                                                         </td>
+<td>Any element at any name</td>
 </tr>
 <tr>
 <td><code>[2]</code></td>
-<td>The second element (of an array)                                                                </td>
+<td>The second element (of an array)</td>
 </tr>
 <tr>
 <td><code>[&#39;foo&#39;]</code></td>
-<td>Equivalent to .foo                                                                              </td>
+<td>Equivalent to .foo</td>
 </tr>
 <tr>
 <td><code>[*]</code></td>
-<td>Equivalent to .*                                                                                </td>
+<td>Equivalent to .*</td>
 </tr>
 <tr>
 <td><code>..</code></td>
@@ -431,9 +493,9 @@ oboe(&#39;/content&#39;)
 </tr>
 </tbody>
 </table>
-<p>The pattern engine supports 
+<p>The pattern engine supports
 <a href="/examples/#css4-style-patterns">CSS-4 style node selection</a>
-using the dollar, <code>$</code>, symbol. See also <a href="/examples/#example-patterns">the example patterns</a>. </p>
+using the dollar, <code>$</code>, symbol. See also <a href="/examples/#example-patterns">the example patterns</a>.</p>
 <h2 id="browser-support">Browser support</h2>
 <p>These browsers have full support:</p>
 <ul>
@@ -446,16 +508,75 @@ using the dollar, <code>$</code>, symbol. See also <a href="/examples/#example-p
 <ul>
 <li>Internet explorer 8 and 9, given <a href="https://github.com/kriskowal/es5-shim/blob/master/es5-sham.js">appropriate shims for ECMAScript 5</a></li>
 </ul>
-<p>Unfortunately, <abbr title="Internet Explorer">IE</abbr> before version 10 
+<p>Unfortunately, <abbr title="Internet Explorer">IE</abbr> before version 10
 <a href="http://blogs.msdn.com/b/ieinternals/archive/2010/04/06/comet-streaming-in-internet-explorer-with-xmlhttprequest-and-xdomainrequest.aspx">doesn&#39;t provide any convenient way to read an http request while it is in progress</a>.
 It may be possible to add support for limited streaming in Internet Explorer 8 and 9 using the proprietary
 <a href="http://msdn.microsoft.com/en-us/library/cc288060%28VS.85%29.aspx">XDomainRequest</a>
 but this object is has a reduced API and is buggy -
 <a href="http://blogs.msdn.com/b/ieinternals/archive/2010/05/13/xdomainrequest-restrictions-limitations-and-workarounds.aspx">only GET and POST are supported and it does not allow HTTP headers to be set</a>.
-It also requires that responses set the <code>Access-Control-Allow-Origin</code> 
+It also requires that responses set the <code>Access-Control-Allow-Origin</code>
 header and fails in IE8 for users browsing using InPrivate mode.</p>
 <p>The good news is that in older versions of IE Oboe gracefully degrades.
 It falls back to waiting for the whole response to return, then fires
 all the events instantaneously.
 You don&#39;t get streaming but the responsiveness is no worse than if you
 had used a non-streaming AJAX download.</p>
+
+                 </main>
+
+              </div>
+
+           </div>
+        </div>
+        <footer>
+           <div id="footer-contents">
+              <a class="contact" href="mailto:jim.higson@gmail.com">Contact the author</a>
+
+              <span id="externalLinks">
+                  <a href="https://twitter.com/OboeJs">
+                     <svg width="" height="">
+                        <path class="logo" d="M 44 6.6 C 37 6.6 31.2 12.4 31.2 19.4 C 31.2 20.4 31.3 21.4 31.5 22.3 C 20.9 21.8 11.4 16.7 5.1 8.9 C 4 10.8 3.4 13.1 3.4 15.4 C 3.4 19.9 5.6 23.8 9.1 26.1 C 7 26 5 25.4 3.3 24.5 C 3.2 24.5 3.3 24.6 3.3 24.6 C 3.3 30.8 7.7 36 13.5 37.2 C 12.5 37.5 11.3 37.7 10.2 37.7 C 9.3 37.7 8.5 37.6 7.8 37.4 C 9.4 42.5 14.1 46.2 19.7 46.3 C 15.3 49.8 9.8 51.8 3.8 51.8 C 2.8 51.8 1.8 51.7 0.8 51.6 C 6.4 55.3 13.2 57.4 20.4 57.4 C 44 57.4 56.9 37.9 56.9 20.9 C 56.9 20.4 56.9 19.8 56.8 19.3 C 59.3 17.4 61.5 15.2 63.3 12.6 C 61 13.6 58.5 14.3 55.9 14.6 C 58.5 13 60.6 10.5 61.5 7.5 C 59.1 9 56.3 10.1 53.4 10.7 C 51 8.2 47.7 6.6 44 6.6 z"/>
+                     </svg>
+                  </a>
+
+                  <a href="https://github.com/jimhigson/oboe.js">
+                     <svg width="" height="">
+                        <path class="logo" d="M 32,1.3 C 15,1.3 1.3,15 1.3,32 1.3,49 15,62.7 32,62.7 49,62.7 62.7,49 62.7,32 62.7,15 49,1.3 32,1.3 z m 0,4.9 c 3.5,0 6.9,0.7 10,2 3.1,1.3 5.8,3.1 8.2,5.5 2.4,2.4 4.2,5.1 5.5,8.2 1.3,3.2 2,6.5 2,10 0,3.5 -0.7,6.9 -2,10 -1.3,3.1 -3.2,5.8 -5.5,8.2 -2.4,2.4 -5.1,4.2 -8.2,5.5 -0.8,0.3 -1.6,0.6 -2.4,0.9 l 0,-4.6 c 0,-2.4 -0.8,-4.2 -2.5,-5.3 1,-0.1 2,-0.3 2.9,-0.4 0.9,-0.2 1.8,-0.4 2.8,-0.8 1,-0.3 1.9,-0.7 2.6,-1.2 0.8,-0.5 1.5,-1.1 2.2,-1.8 0.7,-0.7 1.3,-1.6 1.8,-2.5 0.5,-0.9 0.8,-2.1 1.1,-3.4 0.3,-1.3 0.4,-2.8 0.4,-4.4 0,-3.1 -1,-5.8 -3,-7.9 C 48.9,21.8 48.7,19.2 47.6,16.3 L 46.9,16.3 c -0.5,-0.1 -1.4,0.2 -2.8,0.7 C 42.7,17.4 41.2,18.2 39.5,19.4 c -2.4,-0.7 -4.8,-1 -7.4,-1 -2.6,0 -5,0.3 -7.4,1 -1.1,-0.7 -2.1,-1.3 -3,-1.8 -0.9,-0.5 -1.7,-0.8 -2.3,-1 -0.6,-0.2 -1.1,-0.3 -1.6,-0.3 -0.5,0 -0.8,-0.1 -0.9,0 -0.1,0 -0.3,0 -0.3,0.1 -1.1,2.8 -1.2,5.4 -0.3,7.8 -2,2.2 -3,4.8 -3,7.9 0,1.6 0.1,3 0.4,4.4 0.3,1.3 0.7,2.5 1.2,3.4 0.5,0.9 1.1,1.8 1.8,2.5 0.7,0.7 1.4,1.4 2.2,1.8 0.8,0.5 1.6,0.8 2.6,1.2 1,0.3 1.9,0.6 2.8,0.8 0.9,0.2 1.8,0.3 2.8,0.4 -1.6,1.1 -2.5,2.9 -2.5,5.3 l 0,4.7 C 23.7,56.4 22.8,56.1 22,55.8 18.9,54.5 16.2,52.6 13.8,50.2 11.4,47.8 9.5,45.1 8.3,42 6.9,38.9 6.2,35.5 6.2,32 6.2,28.5 6.9,25.1 8.3,22 9.5,18.9 11.4,16.1 13.8,13.8 16.2,11.4 18.9,9.5 22,8.3 25.1,6.9 28.5,6.2 32,6.2 z"/>
+                     </svg>
+                  </a>
+
+                  <a href="https://groups.google.com/forum/#!forum/oboejs">
+                     <svg width="" height="">
+                        <path class="logo" d="M 34.7 4.1 C 29.7 4.1 24.6 4.9 20 7.3 C 18.1 8.3 16.7 9.3 15.4 10.3 C 11.9 12.9 10.1 15.5 8.6 17.6 C 7.1 19.8 5.9 23.2 5.4 24.7 C 4.8 26.5 4.7 28.3 4.5 30.2 C 4.3 31.4 4.3 32.7 4.4 34.1 C 4.5 37.2 5.2 40.6 6.7 43.8 C 7.8 46.1 9.2 48.3 10.7 50.3 C 13 53.6 16.8 55.7 19 56.8 C 20.7 57.7 22.9 58.7 26.6 59.3 C 30.7 60 36.9 60 46.7 58.4 C 49.4 58 52.4 57.1 55.8 56.4 C 56 56.4 56.2 56.3 56.4 56.2 C 56.6 56.2 56.8 56.2 56.8 56.1 C 56.6 51.7 56.7 46.8 56.8 44.6 C 56.8 44.3 56.8 43.2 56.8 42.8 C 56.8 42.4 57 42.5 57.3 42.3 L 59.3 40.3 L 43.3 40 L 37.8 43.2 L 48.8 42.7 L 48.8 55 C 48.8 55 44.4 56.9 38.3 56.8 C 33.9 56.7 28.6 55.7 23.5 51.8 C 15.4 45.7 12.6 37.3 12.5 31.3 C 12.5 28.2 12.4 25.9 12.7 24.9 C 12.9 24 13.2 21.9 14.2 19.7 C 15.4 16.6 17.5 13.3 21.4 10.7 C 23.8 9 27 7.5 30.8 7.2 C 35.1 6.8 38.2 7.3 40.8 8.3 C 47.1 10.8 48.4 12.8 49.3 13.6 C 49.3 13.6 49.5 13.8 49.5 13.9 C 49.4 14 49.4 14.1 49.3 14.2 C 48.9 14.9 47.8 16.8 47.8 16.8 L 50.2 16.6 L 56.6 10.3 C 56.8 10 51.1 6.2 43.1 4.8 C 40.5 4.4 37.6 4.1 34.7 4.1 z"/>
+                     </svg>
+                  </a>
+              </span>
+
+              <a href="//samwakeling.com" id="sw" title="Web design by Sam Wakeling">Web
+                 design by Sam Wakeling
+              </a>
+           </div>
+        </footer>
+
+        
+
+        
+           <script src="/jquery/jquery.js"></script>
+        
+
+        
+        
+
+        
+
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', '', 'oboejs.com');
+            ga('send', 'pageview');
+        </script>
+    </body>
+</html>
