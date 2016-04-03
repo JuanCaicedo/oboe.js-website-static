@@ -1,4 +1,5 @@
 const R = require('ramda');
+const cheerio = require('cheerio');
 const Metalsmith = require('metalsmith');
 const markdown = require('metalsmith-markdown');
 const permalinks = require('metalsmith-permalinks');
@@ -19,14 +20,14 @@ const excludeScss = function(files) {
   return R.pickBy(fileIsNotScss, files);
 };
 
-/* linking functions */
-const addRootToPage = R.curry(function(root, files, name) {
-  files[name].root = root;
+/* navbar functions */
+const addPropertyToFile = R.curry(function(property, root, files, name) {
+  files[name][property] = root;
 });
 
 const addRoot = R.curry(function(root, files) {
   var names = R.keys(files);
-  R.forEach(addRootToPage(root, files), names);
+  R.forEach(addPropertyToFile('root', root, files), names);
 });
 
 const getListing = function(files) {
@@ -34,10 +35,6 @@ const getListing = function(files) {
   delete files.listing;
   return R.split('\n', listing);
 };
-
-const addPagesToFile = R.curry(function(pages, files, name) {
-  files[name].pages = pages;
-});
 
 const formatPage = function(listing) {
   const title = R.replace('.md', '', listing);
@@ -51,7 +48,30 @@ const addPages = function(files) {
   const listing = getListing(files);
   const pages = R.map(formatPage, listing);
   const names = R.keys(files);
-  R.forEach(addPagesToFile(pages, files), names);
+  R.forEach(addPropertyToFile('pages', pages, files), names);
+};
+
+/* sidebar functions */
+
+const addHeading = function(files) {
+  R.mapObjIndexed(function(file, name) {
+    if(!R.contains('.html', name)) {
+      return undefined;
+    };
+    $ = cheerio.load(file.contents);
+    const headingEle = $('h1').first();
+    const heading = {
+      text: headingEle.text(),
+      id:   headingEle.attr('id')
+    };
+
+    headingEle.remove();
+
+    file.heading = heading;
+    file.contents = new Buffer($.html().toString('binary'), 'binary');
+
+    return file;
+  }, files);
 };
 
 function main(){
@@ -60,6 +80,7 @@ function main(){
     .use(markdown())
     .use(addRoot(ROOT))
     .use(addPages)
+    .use(addHeading)
     .use(layouts({
       engine: 'handlebars'
     }))
@@ -92,5 +113,6 @@ module.exports = {
   excludeScss: excludeScss,
   getListing: getListing,
   formatPage: formatPage,
-  addRoot: addRoot
+  addRoot: addRoot,
+  addHeading: addHeading
 };
