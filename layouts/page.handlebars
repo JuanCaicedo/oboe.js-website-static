@@ -31,7 +31,7 @@
                   <li class="reducedLogo">Oboe.js</li>
               {{/home}}
               {{^home}}
-                  <li class="reducedLogo"><a href="/">Oboe.js</a></li>
+                  <li class="reducedLogo"><a href="{{root}}/">Oboe.js</a></li>
               {{/home}}
 
               {{#pages}}
@@ -39,7 +39,7 @@
                      {{#if current}}
                          <span class="siteLink">{{title}}</span>
                      {{else}}
-                         <a class="siteLink" href="/{{path}}">{{title}}</a>
+                         <a class="siteLink" href="{{../../root}}/{{path}}">{{title}}</a>
                      {{/if}}
                   </li>
 
@@ -52,7 +52,7 @@
                   <h1>Oboe.js</h1>
               {{/home}}
               {{^home}}
-                  <h1><a href="/">Oboe.js</a></h1>
+                  <h1><a href="{{root}}/">Oboe.js</a></h1>
               {{/home}}
 
               {{#if home}}
@@ -65,7 +65,7 @@
               <nav class="col col1">
 
                  {{#if home}}
-                    <a href="/download"
+                    <a href="{{root}}/download"
                        id="download" title="Get the code">
                         Download <em id="version">{{latestTag}}</em>
                     </a>

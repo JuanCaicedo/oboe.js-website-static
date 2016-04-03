@@ -2,9 +2,10 @@ const R = require('ramda');
 const Metalsmith = require('metalsmith');
 const markdown = require('metalsmith-markdown');
 const permalinks = require('metalsmith-permalinks');
-const collections = require('metalsmith-collections');
 const layouts = require('metalsmith-layouts');
 const sass = require('metalsmith-sass');
+
+const ROOT = 'http://juancaicedo.github.io/oboe.js-website';
 
 /* Sass processing functions */
 const isScss = R.contains('.scss');
@@ -18,15 +19,47 @@ const excludeScss = function(files) {
   return R.pickBy(fileIsNotScss, files);
 };
 
+/* linking functions */
+const addRootToPage = R.curry(function(root, files, name) {
+  files[name].root = root;
+});
+
+const addRoot = R.curry(function(root, files) {
+  var names = R.keys(files);
+  R.forEach(addRootToPage(root, files), names);
+});
+
+const getListing = function(files) {
+  const listing = files.listing.contents.toString();
+  delete files.listing;
+  return R.split('\n', listing);
+};
+
+const addPagesToFile = R.curry(function(pages, files, name) {
+  files[name].pages = pages;
+});
+
+const formatPage = function(listing) {
+  const title = R.replace('.md', '', listing);
+  return {
+    title: title,
+    path: title
+  };
+};
+
+const addPages = function(files) {
+  const listing = getListing(files);
+  const pages = R.map(formatPage, listing);
+  const names = R.keys(files);
+  R.forEach(addPagesToFile(pages, files), names);
+};
+
 function main(){
   Metalsmith(__dirname)
     .source('./src')
-    .use(collections({
-      pages: {
-        pattern: 'pages/*.md'
-      }
-    }))
     .use(markdown())
+    .use(addRoot(ROOT))
+    .use(addPages)
     .use(layouts({
       engine: 'handlebars'
     }))
@@ -56,5 +89,8 @@ if (require.main === module) {
 
 module.exports = {
   fileIsNotScss: fileIsNotScss,
-  excludeScss: excludeScss
+  excludeScss: excludeScss,
+  getListing: getListing,
+  formatPage: formatPage,
+  addRoot: addRoot
 };
