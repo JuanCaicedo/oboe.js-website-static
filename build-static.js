@@ -20,6 +20,15 @@ const excludeScss = function(files) {
   return R.pickBy(fileIsNotScss, files);
 };
 
+const removeSassExceptAll = function(files) {
+  const filesToKeep = excludeScss(files);
+  const filesToRemove = R.omit(R.keys(filesToKeep), files);
+  const removeFile = function(name) {
+    delete files[name];
+  };
+  R.forEach(removeFile, R.keys(filesToRemove));
+};
+
 /* navbar functions */
 const addPropertyToFile = R.curry(function(property, root, files, name) {
   files[name][property] = root;
@@ -52,7 +61,6 @@ const addPages = function(files) {
 };
 
 /* sidebar functions */
-
 const addHeading = function(files) {
   R.mapObjIndexed(function(file, name) {
     if(!R.contains('.html', name)) {
@@ -84,14 +92,7 @@ function main(){
     .use(layouts({
       engine: 'handlebars'
     }))
-    .use(function(files) {
-      const filesToKeep = excludeScss(files);
-      const filesToRemove = R.omit(R.keys(filesToKeep), files);
-      const removeFile = function(name) {
-        delete files[name];
-      };
-      R.map(removeFile, R.keys(filesToRemove));
-    })
+    .use(removeSassExceptAll)
     .use(sass({
       outputDir: 'css/'
     }))
