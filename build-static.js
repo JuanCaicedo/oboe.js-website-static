@@ -63,8 +63,9 @@ const addPages = function(files) {
 /* sidebar functions */
 const addHeading = function(files) {
   R.mapObjIndexed(function(file, name) {
+    // only process html files
     if(!R.contains('.html', name)) {
-      return undefined;
+      return;
     };
     $ = cheerio.load(file.contents);
     const headingEle = $('h1').first();
@@ -77,8 +78,27 @@ const addHeading = function(files) {
 
     file.heading = heading;
     file.contents = new Buffer($.html().toString('binary'), 'binary');
+  }, files);
+};
 
-    return file;
+const addSections = function(files) {
+  R.mapObjIndexed(function(file, name) {
+    // only process html files
+    if(!R.contains('.html', name)) {
+      return;
+    };
+    $ = cheerio.load(file.contents);
+    const $headings = $('h2');
+    const sections = $headings.map(function(i, heading) {
+      return {
+        text: $(heading).text(),
+        id:   $(heading).attr('id')
+      };
+    });
+
+    file.sections = sections;
+    file.multipleSections = sections.length > 1;
+
   }, files);
 };
 
@@ -89,6 +109,7 @@ function main(){
     .use(addRoot(ROOT))
     .use(addPages)
     .use(addHeading)
+    .use(addSections)
     .use(layouts({
       engine: 'handlebars'
     }))
@@ -115,5 +136,6 @@ module.exports = {
   getListing: getListing,
   formatPage: formatPage,
   addRoot: addRoot,
-  addHeading: addHeading
+  addHeading: addHeading,
+  addSections: addSections
 };

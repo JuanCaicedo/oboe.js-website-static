@@ -111,3 +111,41 @@ describe('addHeading', function(){
   });
 
 });
+
+describe('addSections', function(){
+
+  it('adds sections property to all files', function(){
+    const files = {
+      'first.html': {
+        contents: '<h2 id="test-id1">Test1</h2>\n<h2 id="test-id2">Test2</h2>'
+      }
+    };
+
+    // Mutates files
+    build.addSections(files);
+
+    expect(files['first.html']).to.have.property('sections')
+      .and.to.deep.eql([{
+        text: 'Test1',
+        id: 'test-id1'
+      }, {
+        text: 'Test2',
+        id: 'test-id2'
+      }]);
+
+  });
+
+  it('adds multipleSections property to all files', function(){
+    const files = {
+      'first.html': {
+        contents: '<h2 id="test-id1">Test1</h2>\n<h2 id="test-id2">Test2</h2>'
+      }
+    };
+
+    // Mutates files
+    build.addSections(files);
+
+    expect(files['first.html']).to.have.property('multipleSections', true);
+  });
+
+});
