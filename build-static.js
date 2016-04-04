@@ -111,7 +111,8 @@ function main(){
     .use(addHeading)
     .use(addSections)
     .use(layouts({
-      engine: 'handlebars'
+      engine: 'handlebars',
+      partials: 'partials'
     }))
     .use(removeSassExceptAll)
     .use(sass({

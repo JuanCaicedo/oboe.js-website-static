@@ -1,6 +1,5 @@
 ---
 layout: page.handlebars
-home: true
 ---
 
 Streaming JSON loading for Node and browsers
