@@ -3,6 +3,8 @@ const cheerio = require('cheerio');
 const Metalsmith = require('metalsmith');
 const markdown = require('metalsmith-markdown');
 const permalinks = require('metalsmith-permalinks');
+const registerHelpers = require('metalsmith-register-helpers');
+const inPlace = require('metalsmith-in-place');
 const layouts = require('metalsmith-layouts');
 const sass = require('metalsmith-sass');
 
@@ -105,14 +107,20 @@ const addSections = function(files) {
 function main(){
   Metalsmith(__dirname)
     .source('./src')
+    .use(registerHelpers({
+      directory: './helpers'
+    }))
+    .use(inPlace({
+      engine: 'handlebars',
+      partials: './partials'
+    }))
     .use(markdown())
     .use(addRoot(ROOT))
     .use(addPages)
     .use(addHeading)
     .use(addSections)
     .use(layouts({
-      engine: 'handlebars',
-      partials: 'partials'
+      engine: 'handlebars'
     }))
     .use(removeSassExceptAll)
     .use(sass({
