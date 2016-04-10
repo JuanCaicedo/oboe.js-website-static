@@ -8,8 +8,6 @@ const inPlace = require('metalsmith-in-place');
 const layouts = require('metalsmith-layouts');
 const sass = require('metalsmith-sass');
 
-const ROOT = 'http://juancaicedo.github.io/oboe.js-website';
-
 /* Sass processing functions */
 const isScss = R.contains('.scss');
 const isAll = R.contains('all.scss');
@@ -32,13 +30,8 @@ const removeSassExceptAll = function(files) {
 };
 
 /* navbar functions */
-const addPropertyToFile = R.curry(function(property, root, files, name) {
-  files[name][property] = root;
-});
-
-const addRoot = R.curry(function(root, files) {
-  var names = R.keys(files);
-  R.forEach(addPropertyToFile('root', root, files), names);
+const addPropertyToFile = R.curry(function(propertyName, property, files, name) {
+  files[name][propertyName] = property;
 });
 
 const getListing = function(files) {
@@ -115,7 +108,6 @@ function main(){
       partials: './partials'
     }))
     .use(markdown())
-    .use(addRoot(ROOT))
     .use(addPages)
     .use(addHeading)
     .use(addSections)
@@ -144,7 +136,6 @@ module.exports = {
   excludeScss: excludeScss,
   getListing: getListing,
   formatPage: formatPage,
-  addRoot: addRoot,
   addHeading: addHeading,
   addSections: addSections
 };
