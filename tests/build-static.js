@@ -75,6 +75,22 @@ describe('formatPage', function() {
 
 });
 
+describe('addRoot', function() {
+
+  it('adds root variable to all files', function() {
+    const root = 'test';
+    const files = {
+      first: {}
+    };
+
+    // Mutates files
+    build.addRoot(root, files);
+
+    expect(files.first).to.have.property('root', 'test');
+  });
+
+});
+
 describe('addHeading', function(){
 
   it('adds heading property to all files', function(){

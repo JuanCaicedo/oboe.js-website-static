@@ -31,7 +31,7 @@
                   <li class="reducedLogo">Oboe.js</li>
               {{/home}}
               {{^home}}
-                  <li class="reducedLogo"><a href="/">Oboe.js</a></li>
+                  <li class="reducedLogo"><a href="{{root}}/">Oboe.js</a></li>
               {{/home}}
 
               {{#pages}}
@@ -39,7 +39,7 @@
                      {{#if current}}
                          <span class="siteLink">{{title}}</span>
                      {{else}}
-                         <a class="siteLink" href="/{{path}}">{{title}}</a>
+                         <a class="siteLink" href="{{../../root}}/{{path}}">{{title}}</a>
                      {{/if}}
                   </li>
 
