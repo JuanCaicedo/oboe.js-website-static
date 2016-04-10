@@ -154,18 +154,7 @@
            }(document, "script", "twitter-wjs");</script>
         {{/if}}
 
-        {{#if production}}
-            <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-        {{else}}
-           <script src="/jquery/jquery.js"></script>
-        {{/if}}
-
-        {{#each scripts}}
-            <script type="text/javascript" src="{{this}}"></script>
-        {{/each}}
-        {{#if initScript}}
-            <script type="text/javascript">{{initScript}}</script>
-        {{/if}}
+        <script type="text/javascript" src="js/app.js"></script>
 
         {{> templates }}
 

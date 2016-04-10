@@ -2,6 +2,7 @@ const R = require('ramda');
 const cheerio = require('cheerio');
 const Metalsmith = require('metalsmith');
 const markdown = require('metalsmith-markdown');
+const concat = require('metalsmith-concat');
 const permalinks = require('metalsmith-permalinks');
 const registerHelpers = require('metalsmith-register-helpers');
 const inPlace = require('metalsmith-in-place');
@@ -108,6 +109,10 @@ function main(){
       partials: './partials'
     }))
     .use(markdown())
+    .use(concat({
+      files: require('./sourceList.js'),
+      output: 'js/app.js'
+    }))
     .use(addPages)
     .use(addHeading)
     .use(addSections)
