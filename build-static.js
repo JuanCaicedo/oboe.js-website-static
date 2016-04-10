@@ -9,7 +9,7 @@ const inPlace = require('metalsmith-in-place');
 const layouts = require('metalsmith-layouts');
 const sass = require('metalsmith-sass');
 
-const ROOT = 'http://juancaicedo.github.io/oboe.js-website';
+const ROOT = 'http://localhost:8080';
 
 /* Sass processing functions */
 const isScss = R.contains('.scss');
