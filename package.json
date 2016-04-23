@@ -40,7 +40,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "predeploy": "grunt build",
-    "start": "node index.js --env=prod",
+    "start": "http-server gh-pages",
     "dev": "nodemon -e js,md,scss,handlebars --exec 'node build-static.js'"
   },
   "repository": {
@@ -72,6 +72,7 @@
     "node": "4.2.x"
   },
   "devDependencies": {
+    "http-server": "0.9.0",
     "nodemon": "1.9.1"
   }
 }
