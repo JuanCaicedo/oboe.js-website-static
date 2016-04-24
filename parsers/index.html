@@ -29,41 +29,41 @@
            <ul>
               
               
-                  <li class="reducedLogo"><a href="http://www.juancaicedo.com/oboe.js-website//">Oboe.js</a></li>
+                  <li class="reducedLogo"><a href="http://localhost:8080/">Oboe.js</a></li>
               
 
               
                   <li>
                      
-                         <a class="siteLink" href="http://www.juancaicedo.com/oboe.js-website//why">Why Oboe.js?</a>
+                         <a class="siteLink" href="http://localhost:8080/why">Why Oboe.js?</a>
                      
                   </li>
 
               
                   <li>
                      
-                         <a class="siteLink" href="http://www.juancaicedo.com/oboe.js-website//examples">Examples</a>
+                         <a class="siteLink" href="http://localhost:8080/examples">Examples</a>
                      
                   </li>
 
               
                   <li>
                      
-                         <a class="siteLink" href="http://www.juancaicedo.com/oboe.js-website//api">API</a>
+                         <a class="siteLink" href="http://localhost:8080/api">API</a>
                      
                   </li>
 
               
                   <li>
                      
-                         <a class="siteLink" href="http://www.juancaicedo.com/oboe.js-website//download">Download</a>
+                         <a class="siteLink" href="http://localhost:8080/download">Download</a>
                      
                   </li>
 
               
                   <li>
                      
-                         <a class="siteLink" href="http://www.juancaicedo.com/oboe.js-website//discuss">Discuss</a>
+                         <a class="siteLink" href="http://localhost:8080/discuss">Discuss</a>
                      
                   </li>
 
@@ -74,7 +74,7 @@
            <header class="row">
               
               
-                  <h1><a href="http://www.juancaicedo.com/oboe.js-website//">Oboe.js</a></h1>
+                  <h1><a href="http://localhost:8080/">Oboe.js</a></h1>
               
 
               
@@ -147,61 +147,59 @@ comparison, with SAX you must programmatically infer objects from many callbacks
 <h2 id="code-comparison-sax">Code comparison: SAX</h2>
 <p>We have JSON containing an array of people objects and we wish to extract the
 name of the first person. Using SAX this is quite involved:</p>
-<pre><code class="lang-js">function extractNameOfFirstPerson(){
+<pre><code class="undefinedjs"><span class="function"><span class="keyword">function</span> <span class="title">extractNameOfFirstPerson</span><span class="params">()</span>{</span>
 
-   var parser = clarinet.parser(),
+   <span class="keyword">var</span> parser = clarinet.parser(),
 
-       // With a SAX parser it is the developer&#39;s responsibility
-       // to track where in the document the cursor currently is.
-       // Several variables are required to maintain this state.
-       inPeopleArray = false,
-       inPersonObject = false,
-       inNameAttribute = false,
-       found = false;
+       <span class="comment">// With a SAX parser it is the developer's responsibility</span>
+       <span class="comment">// to track where in the document the cursor currently is.</span>
+       <span class="comment">// Several variables are required to maintain this state.</span>
+       inPeopleArray = <span class="literal">false</span>,
+       inPersonObject = <span class="literal">false</span>,
+       inNameAttribute = <span class="literal">false</span>,
+       found = <span class="literal">false</span>;
 
-   parser.onopenarray = function(){
-      // For brevity we&#39;ll cheat by assuming there is only one
-      // array in the document. In practice this would be overly
-      // brittle.
-      inPeopleArray = true;
+   parser.onopenarray = <span class="keyword">function</span>(){
+      <span class="comment">// For brevity we'll cheat by assuming there is only one</span>
+      <span class="comment">// array in the document. In practice this would be overly</span>
+      <span class="comment">// brittle.</span>
+      inPeopleArray = <span class="literal">true</span>;
    };
 
-   parser.onclosearray = function(){
-      inPeopleArray = false;
+   parser.onclosearray = <span class="keyword">function</span>(){
+      inPeopleArray = <span class="literal">false</span>;
    };
 
-   parser.onopenobject = function(){
+   parser.onopenobject = <span class="keyword">function</span>(){
       inPersonObject = inPeopleArray;
    };
 
-   parser.oncloseobject = function(){
-      inPersonObject = false;
+   parser.oncloseobject = <span class="keyword">function</span>(){
+      inPersonObject = <span class="literal">false</span>;
    };
 
-   parser.onkey = function(key){
-      inNameAttribute = (inPeopleObject &amp;&amp; key == &#39;name&#39;);
+   parser.onkey = <span class="keyword">function</span>(key){
+      inNameAttribute = (inPeopleObject &amp;&amp; key == <span class="string">'name'</span>);
    };
 
-   parser.onvalue = function(value){
-      if( !found &amp;&amp; inNameAttribute ) {
-         // finally!
-         console.log(&#39;the name is&#39;, value);
-         found = true;
+   parser.onvalue = <span class="keyword">function</span>(value){
+      <span class="keyword">if</span>( !found &amp;&amp; inNameAttribute ) {
+         <span class="comment">// finally!</span>
+         console.log(<span class="string">'the name is'</span>, value);
+         found = <span class="literal">true</span>;
       }
    };
 
-   // return the parser to be hooked up to a stream
-   return parser;
-}
-</code></pre>
+   <span class="comment">// return the parser to be hooked up to a stream</span>
+   <span class="keyword">return</span> parser;
+}</code></pre>
 <h2 id="code-comparison-oboe-js">Code comparison: Oboe.js</h2>
 <p>Oboe makes extracting the name very much easier, but reacts equally quickly
 to the streamed input as the SAX example above:</p>
-<pre><code class="lang-js">oboe(&#39;people.json&#39;)
-   .node(&#39;[0].name&#39;, function(name){
-      console.log(&#39;the name is&#39;, name);
-   });
-</code></pre>
+<pre><code class="undefinedjs">oboe(<span class="string">'people.json'</span>)
+   .node(<span class="string">'[0].name'</span>, <span class="keyword">function</span>(name){
+      console.log(<span class="string">'the name is'</span>, name);
+   });</code></pre>
 
                    <h2 id="improve-this-page">Improve this page</h2>
 <p>Is this page clear enough? Typo-free? Could you improve it?</p>

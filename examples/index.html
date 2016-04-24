@@ -29,41 +29,41 @@
            <ul>
               
               
-                  <li class="reducedLogo"><a href="http://www.juancaicedo.com/oboe.js-website//">Oboe.js</a></li>
+                  <li class="reducedLogo"><a href="http://localhost:8080/">Oboe.js</a></li>
               
 
               
                   <li>
                      
-                         <a class="siteLink" href="http://www.juancaicedo.com/oboe.js-website//why">Why Oboe.js?</a>
+                         <a class="siteLink" href="http://localhost:8080/why">Why Oboe.js?</a>
                      
                   </li>
 
               
                   <li>
                      
-                         <a class="siteLink" href="http://www.juancaicedo.com/oboe.js-website//examples">Examples</a>
+                         <a class="siteLink" href="http://localhost:8080/examples">Examples</a>
                      
                   </li>
 
               
                   <li>
                      
-                         <a class="siteLink" href="http://www.juancaicedo.com/oboe.js-website//api">API</a>
+                         <a class="siteLink" href="http://localhost:8080/api">API</a>
                      
                   </li>
 
               
                   <li>
                      
-                         <a class="siteLink" href="http://www.juancaicedo.com/oboe.js-website//download">Download</a>
+                         <a class="siteLink" href="http://localhost:8080/download">Download</a>
                      
                   </li>
 
               
                   <li>
                      
-                         <a class="siteLink" href="http://www.juancaicedo.com/oboe.js-website//discuss">Discuss</a>
+                         <a class="siteLink" href="http://localhost:8080/discuss">Discuss</a>
                      
                   </li>
 
@@ -74,7 +74,7 @@
            <header class="row">
               
               
-                  <h1><a href="http://www.juancaicedo.com/oboe.js-website//">Oboe.js</a></h1>
+                  <h1><a href="http://localhost:8080/">Oboe.js</a></h1>
               
 
               
@@ -145,233 +145,212 @@
 <p>It isn&#39;t what Oboe was built for but it works fine as a simple AJAX library.
 This might be a good tactic to drop it into an existing application before iteratively refactoring
 towards progressive loading. The call style should be familiar to jQuery users.</p>
-<pre><code class="lang-js">oboe(&#39;/myapp/things.json&#39;)
-   .done(function(things) {
+<pre><code class="undefinedjs">oboe(<span class="string">'/myapp/things.json'</span>)
+   .done(<span class="keyword">function</span>(things) {
 
-      // we got it
+      <span class="comment">// we got it</span>
    })
-   .fail(function() {
+   .fail(<span class="keyword">function</span>() {
 
-      // we don&#39;t got it
-   });
-</code></pre>
+      <span class="comment">// we don't got it</span>
+   });</code></pre>
 <h2 id="extracting-objects-from-the-json-stream">Extracting objects from the JSON stream</h2>
 <p>Say we have a resource called things.json that we need to fetch:</p>
-<pre><code class="lang-js">{
-   &quot;foods&quot;: [
-      {&quot;name&quot;:&quot;aubergine&quot;,    &quot;colour&quot;:&quot;purple&quot;},
-      {&quot;name&quot;:&quot;apple&quot;,        &quot;colour&quot;:&quot;red&quot;},
-      {&quot;name&quot;:&quot;nuts&quot;,         &quot;colour&quot;:&quot;brown&quot;}
+<pre><code class="undefinedjs">{
+   <span class="string">"foods"</span>: [
+      {<span class="string">"name"</span>:<span class="string">"aubergine"</span>,    <span class="string">"colour"</span>:<span class="string">"purple"</span>},
+      {<span class="string">"name"</span>:<span class="string">"apple"</span>,        <span class="string">"colour"</span>:<span class="string">"red"</span>},
+      {<span class="string">"name"</span>:<span class="string">"nuts"</span>,         <span class="string">"colour"</span>:<span class="string">"brown"</span>}
    ],
-   &quot;badThings&quot;: [
-      {&quot;name&quot;:&quot;poison&quot;,       &quot;colour&quot;:&quot;pink&quot;},
-      {&quot;name&quot;:&quot;broken_glass&quot;, &quot;colour&quot;:&quot;green&quot;}
+   <span class="string">"badThings"</span>: [
+      {<span class="string">"name"</span>:<span class="string">"poison"</span>,       <span class="string">"colour"</span>:<span class="string">"pink"</span>},
+      {<span class="string">"name"</span>:<span class="string">"broken_glass"</span>, <span class="string">"colour"</span>:<span class="string">"green"</span>}
    ]
-}
-</code></pre>
+}</code></pre>
 <p>On the client side we want to download and use this JSON. Running the
 code below, each item will be logged as soon as it is transferred
 without waiting for the whole download to complete.</p>
-<pre><code class="lang-js">oboe(&#39;/myapp/things.json&#39;)
-   .node(&#39;foods.*&#39;, function( foodThing ){
+<pre><code class="undefinedjs">oboe(<span class="string">'/myapp/things.json'</span>)
+   .node(<span class="string">'foods.*'</span>, <span class="keyword">function</span>( foodThing ){
 
-      // This callback will be called everytime a new object is
-      // found in the foods array.
+      <span class="comment">// This callback will be called everytime a new object is</span>
+      <span class="comment">// found in the foods array.</span>
 
-      console.log( &#39;Go eat some&#39;, foodThing.name);
+      console.log( <span class="string">'Go eat some'</span>, foodThing.name);
    })
-   .node(&#39;badThings.*&#39;, function( badThing ){
+   .node(<span class="string">'badThings.*'</span>, <span class="keyword">function</span>( badThing ){
 
-      console.log( &#39;Stay away from&#39;, badThing.name);
+      console.log( <span class="string">'Stay away from'</span>, badThing.name);
    })
-   .done(function(things){
+   .done(<span class="keyword">function</span>(things){
 
       console.log(
-         &#39;there are&#39;, things.foods.length, &#39;things to eat&#39;,
-         &#39;and&#39;, things.nonFoods.length, &#39;to avoid&#39;);
-   });
-</code></pre>
+         <span class="string">'there are'</span>, things.foods.length, <span class="string">'things to eat'</span>,
+         <span class="string">'and'</span>, things.nonFoods.length, <span class="string">'to avoid'</span>);
+   });</code></pre>
 <h2 id="duck-typing">Duck typing</h2>
 <p>Sometimes it is easier to say <em>what you are trying to find</em> than <em>where you&#39;d like to find it</em>.
 <a href="http://en.wikipedia.org/wiki/Duck_typing">Duck typing</a> is provided for these cases.</p>
-<pre><code class="lang-js">oboe(&#39;/myapp/things.json&#39;)
-   .node(&#39;{name colour}&#39;, function( thing ) {
-      // I&#39;ll be called for every object found that
-      // has both a name and a colour
-      console.log(thing.name, &#39; is &#39;, thing.colour);
-   };
-</code></pre>
+<pre><code class="undefinedjs">oboe(<span class="string">'/myapp/things.json'</span>)
+   .node(<span class="string">'{name colour}'</span>, <span class="keyword">function</span>( thing ) {
+      <span class="comment">// I'll be called for every object found that</span>
+      <span class="comment">// has both a name and a colour</span>
+      console.log(thing.name, <span class="string">' is '</span>, thing.colour);
+   };</code></pre>
 <h2 id="hanging-up-when-we-have-what-we-need">Hanging up when we have what we need</h2>
 <p>If you don&#39;t control the data source the service sometimes returns more information than your
 application actually needs.</p>
 <p>If we only care about the foods and not the non-foods we
 can hang up as soon as we have the foods, reducing our precious
 download footprint.</p>
-<pre><code class="lang-js">oboe(&#39;/myapp/things.json&#39;)
+<pre><code class="undefinedjs">oboe(<span class="string">'/myapp/things.json'</span>)
    .node({
-      &#39;foods.*&#39;: function( foodObject ){
+      <span class="string">'foods.*'</span>: <span class="keyword">function</span>( foodObject ){
 
-         alert(&#39;go ahead and eat some &#39; + foodObject.name);
+         alert(<span class="string">'go ahead and eat some '</span> + foodObject.name);
       },
-      &#39;foods&#39;: function(){
-         // We have everything that we need. That&#39;s enough.
-         this.abort();
+      <span class="string">'foods'</span>: <span class="keyword">function</span>(){
+         <span class="comment">// We have everything that we need. That's enough.</span>
+         <span class="keyword">this</span>.abort();
       }
-   });
-</code></pre>
+   });</code></pre>
 <h2 id="detecting-strings-numbers">Detecting strings, numbers</h2>
 <p>Want to detect strings or numbers instead of objects? Oboe doesn&#39;t care about node
 types so the syntax is the same:</p>
-<pre><code class="lang-js">oboe(&#39;/myapp/things.json&#39;)
+<pre><code class="undefinedjs">oboe(<span class="string">'/myapp/things.json'</span>)
    .node({
-      &#39;colour&#39;: function( colour ){
-         // (colour instanceof String) === true
+      <span class="string">'colour'</span>: <span class="keyword">function</span>( colour ){
+         <span class="comment">// (colour instanceof String) === true</span>
       }
-   });
-</code></pre>
+   });</code></pre>
 <h2 id="reacting-before-we-get-the-whole-object">Reacting before we get the whole object</h2>
 <p>As well as <code>node</code> events, you can listen on <code>path</code> events which fire when
 locations in the JSON are found, before we know what will be found there.
 Here we eagerly create elements before we have their content
 so that the page updates as soon as possible:</p>
-<pre><code class="lang-js">var currentPersonElement;
-oboe(&#39;people.json&#39;)
-   .path(&#39;people.*&#39;, function(){
-      // we don&#39;t have the person&#39;s details yet but we know we
-      // found someone in the json stream. We can eagerly put
-      // their div to the page and then fill it with whatever
-      // other data we find:
-      currentPersonElement = $(&#39;&lt;div class=&quot;person&quot;&gt;&#39;);
-      $(&#39;#people&#39;).append(currentPersonElement);
+<pre><code class="undefinedjs"><span class="keyword">var</span> currentPersonElement;
+oboe(<span class="string">'people.json'</span>)
+   .path(<span class="string">'people.*'</span>, <span class="keyword">function</span>(){
+      <span class="comment">// we don't have the person's details yet but we know we</span>
+      <span class="comment">// found someone in the json stream. We can eagerly put</span>
+      <span class="comment">// their div to the page and then fill it with whatever</span>
+      <span class="comment">// other data we find:</span>
+      currentPersonElement = <math title="(&lt;span class=" string"="">'<div class="person">');"><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mo>&lt;</mo><mi>d</mi><mi>i</mi><mi>v</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>r</mi><mi>s</mi><mi>o</mi><mi>n</mi><mrow><mtext></mtext></mrow><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>)</mo></mrow><mo>;</mo></div></math>(<span class="string">'#people'</span>).append(currentPersonElement);
    })
    .node({
-      &#39;people.*.name&#39;: function( name ){
-         // we just found out their name, lets add it
-         // to their div:
+      <span class="string">'people.*.name'</span>: <span class="keyword">function</span>( name ){
+         <span class="comment">// we just found out their name, lets add it</span>
+         <span class="comment">// to their div:</span>
          currentPersonElement.append(
-            &#39;&lt;span class=&quot;name&quot;&gt;&#39; + name + &#39;&lt;/span&gt;&#39;);
+            <span class="string">'&lt;span class="name"&gt;'</span> + name + <span class="string">'&lt;/span&gt;'</span>);
       },
-      &#39;people.*.email&#39;: function( email ){
-         // we just found out their email, lets add
-         // it to their div:
+      <span class="string">'people.*.email'</span>: <span class="keyword">function</span>( email ){
+         <span class="comment">// we just found out their email, lets add</span>
+         <span class="comment">// it to their div:</span>
          currentPersonElement.append(
-            &#39;&lt;span class=&quot;email&quot;&gt;&#39; + email + &#39;&lt;/span&gt;&#39;);
+            <span class="string">'&lt;span class="email"&gt;'</span> + email + <span class="string">'&lt;/span&gt;'</span>);
       }
-   });
-</code></pre>
+   });</code></pre>
 <h2 id="giving-some-visual-feedback-as-a-page-is-updating">Giving some visual feedback as a page is updating</h2>
 <p>Suppose we&#39;re using progressive rendering to go to the next &#39;page&#39; in a dashboard-style single page webapp
 and want to put some kind of indication on the page as individual modules load.</p>
 <p>We use a spinner to give visual feedback when an area of the page is loading and remove it
 when we have the data for that area.</p>
-<pre><code class="lang-js">// JSON from the server side:
+<pre><code class="undefinedjs"><span class="comment">// JSON from the server side:</span>
 {
-   &#39;progress&#39;:[
-      &#39;faster loading&#39;,
-      &#39;maintainable velocity&#39;,
-      &#39;more beer&#39;
+   <span class="string">'progress'</span>:[
+      <span class="string">'faster loading'</span>,
+      <span class="string">'maintainable velocity'</span>,
+      <span class="string">'more beer'</span>
    ],
-   &#39;problems&#39;:[
-      &#39;technical debt&#39;,
-      &#39;team drunk&#39;
+   <span class="string">'problems'</span>:[
+      <span class="string">'technical debt'</span>,
+      <span class="string">'team drunk'</span>
    ]
-}
-</code></pre>
-<pre><code class="lang-js">MyApp.showSpinnerAt(&#39;#progress&#39;);
-MyApp.showSpinnerAt(&#39;#problems&#39;);
+}</code></pre>
+<pre><code class="undefinedjs">MyApp.showSpinnerAt(<span class="string">'#progress'</span>);
+MyApp.showSpinnerAt(<span class="string">'#problems'</span>);
 
-oboe(&#39;/agileReport/sprint42&#39;)
+oboe(<span class="string">'/agileReport/sprint42'</span>)
    .node({
-      &#39;!.progress.*&#39;: function( itemText ){
-         $(&#39;#progress&#39;)
-            .append(&#39;&lt;div&gt;&#39;)
-            .text(&#39;We made progress in &#39; + itemText);
+      <span class="string">'!.progress.*'</span>: <span class="keyword">function</span>( itemText ){
+         <math title="(&lt;span class=" string"="">'#progress') .append(<span class="string">'<div>'</div></span>) .text(<span class="string">'We made progress in '</span> + itemText); }, <span class="string">'!.progress'</span>: <span class="keyword">function</span>(){ MyApp.hideSpinnerAt(<span class="string">'#progress'</span>); }, <span class="string">'!.problems.*'</span>: <span class="keyword">function</span>( itemText ){"><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mo>#</mo><mi>p</mi><mi>r</mi><mi>o</mi><mrow><mi>g</mi><mi>r</mi></mrow><mi>e</mi><mi>s</mi><mi>s</mi><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>)</mo></mrow><mo>.</mo><mi>a</mi><mi>p</mi><mi>p</mi><mi>e</mi><mi>n</mi><mi>d</mi><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mo>&lt;</mo><mi>d</mi><mi>i</mi><mi>v</mi><mo>&gt;</mo><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>)</mo></mrow><mo>.</mo><mrow><mtext>&lt;span class=&quot;string&quot;&gt;'We made progress in '&lt;/span&gt; + itemText</mtext></mrow><mo>;</mo><mo>}</mo><mo>,</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mo>!</mo><mo>.</mo><mi>p</mi><mi>r</mi><mi>o</mi><mrow><mi>g</mi><mi>r</mi></mrow><mi>e</mi><mi>s</mi><mi>s</mi><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>:</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mrow><mi>f</mi><mi>u</mi></mrow><mi>n</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mrow><mo>(</mo><mo>)</mo></mrow><mrow><mo>{</mo><mi>M</mi><mi>y</mi><mi>A</mi><mi>p</mi><mi>p</mi><mo>.</mo><mi>h</mi><mi>i</mi><mi>d</mi><mi>e</mi><mi>S</mi><mi>&pi;</mi><mo>&cap;</mo><mi>e</mi><mi>r</mi><mi>A</mi><mi>t</mi><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mo>#</mo><mi>p</mi><mi>r</mi><mi>o</mi><mrow><mi>g</mi><mi>r</mi></mrow><mi>e</mi><mi>s</mi><mi>s</mi><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>)</mo></mrow><mo>;</mo><mo>}</mo></mrow><mo>,</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mo>!</mo><mo>.</mo><mi>p</mi><mi>r</mi><mi>o</mi><mi>b</mi><mo>&le;</mo><mi>m</mi><mi>s</mi><mo>.</mo><mo>&sdot;</mo><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>:</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mrow><mi>f</mi><mi>u</mi></mrow><mi>n</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mrow><mo>(</mo><mi>i</mi><mi>t</mi><mi>e</mi><mi>m</mi><mi>T</mi><mi>e</mi><mi>x</mi><mi>t</mi><mo>)</mo></mrow><mrow><mo>{</mo><mo></mo></mrow></math>(<span class="string">'#problems'</span>)
+            .append(<span class="string">'&lt;div&gt;'</span>)
+            .text(<span class="string">'We had problems with '</span> + itemText);
       },
-      &#39;!.progress&#39;: function(){
-         MyApp.hideSpinnerAt(&#39;#progress&#39;);
-      },
-      &#39;!.problems.*&#39;: function( itemText ){
-         $(&#39;#problems&#39;)
-            .append(&#39;&lt;div&gt;&#39;)
-            .text(&#39;We had problems with &#39; + itemText);
-      },
-      &#39;!.problems&#39;: function(){
-         MyApp.hideSpinnerAt(&#39;#problems&#39;);
+      <span class="string">'!.problems'</span>: <span class="keyword">function</span>(){
+         MyApp.hideSpinnerAt(<span class="string">'#problems'</span>);
       }
-   });
-</code></pre>
+   });</code></pre>
 <h2 id="taking-meaning-from-a-node-s-location">Taking meaning from a node&#39;s location</h2>
 <p>Node and path callbacks receive a description of where items are found
 as an array of strings describing the path from the JSON root.
 It is sometimes preferable to
 register a wide-matching pattern and use the item&#39;s location to
 decide programmatically what to do with it.</p>
-<pre><code class="lang-js">// JSON data for homepage of a social networking site.
-// Each top-level object is for a different module on the page.
-{  &quot;notifications&quot;:{
-      &quot;newNotifications&quot;: 2,
-      &quot;totalNotifications&quot;: 8
+<pre><code class="undefinedjs"><span class="comment">// JSON data for homepage of a social networking site.</span>
+<span class="comment">// Each top-level object is for a different module on the page.</span>
+{  <span class="string">"notifications"</span>:{
+      <span class="string">"newNotifications"</span>: <span class="number">2</span>,
+      <span class="string">"totalNotifications"</span>: <span class="number">8</span>
    },
-   &quot;messages&quot;: [
-      {  &quot;from&quot;:&quot;Joe&quot;,
-         &quot;subject&quot;:&quot;Wanna go fishing?&quot;,
-         &quot;url&quot;:&quot;messages/1&quot;
+   <span class="string">"messages"</span>: [
+      {  <span class="string">"from"</span>:<span class="string">"Joe"</span>,
+         <span class="string">"subject"</span>:<span class="string">"Wanna go fishing?"</span>,
+         <span class="string">"url"</span>:<span class="string">"messages/1"</span>
       },
-      {  &quot;from&quot;:&quot;Baz&quot;,
-         &quot;subject&quot;:&quot;Hello&quot;,
-         &quot;url&quot;:&quot;messages/2&quot;
+      {  <span class="string">"from"</span>:<span class="string">"Baz"</span>,
+         <span class="string">"subject"</span>:<span class="string">"Hello"</span>,
+         <span class="string">"url"</span>:<span class="string">"messages/2"</span>
       }
    ],
-   &quot;photos&quot;: {
-      &quot;new&quot;: [
-         {  &quot;title&quot;: &quot;Birthday Party&quot;,
-            &quot;url&quot;:&quot;/photos/5&quot;,
-            &quot;peopleTagged&quot;:[&quot;Joe&quot;,&quot;Baz&quot;]
+   <span class="string">"photos"</span>: {
+      <span class="string">"new"</span>: [
+         {  <span class="string">"title"</span>: <span class="string">"Birthday Party"</span>,
+            <span class="string">"url"</span>:<span class="string">"/photos/5"</span>,
+            <span class="string">"peopleTagged"</span>:[<span class="string">"Joe"</span>,<span class="string">"Baz"</span>]
          }
       ]
    }
-   // ... other modules ...
-}
-</code></pre>
-<pre><code class="lang-js">oboe(&#39;http://mysocialsite.example.com/homepage&#39;)
-   .node(&#39;!.*&#39;, function( moduleJson, path ){
+   <span class="comment">// ... other modules ...</span>
+}</code></pre>
+<pre><code class="undefinedjs">oboe(<span class="string">'http://mysocialsite.example.com/homepage'</span>)
+   .node(<span class="string">'!.*'</span>, <span class="keyword">function</span>( moduleJson, path ){
 
-      // This callback will be called with every direct child
-      // of the root object but not the sub-objects therein.
-      // Because we&#39;re maching direct children of the root the
-      // path argument is a single-element array with the module
-      // name; it resembles [&#39;messages&#39;] or [&#39;photos&#39;].
-      var moduleName = path[0];
+      <span class="comment">// This callback will be called with every direct child</span>
+      <span class="comment">// of the root object but not the sub-objects therein.</span>
+      <span class="comment">// Because we're maching direct children of the root the</span>
+      <span class="comment">// path argument is a single-element array with the module</span>
+      <span class="comment">// name; it resembles ['messages'] or ['photos'].</span>
+      <span class="keyword">var</span> moduleName = path[<span class="number">0</span>];
 
       My.App
          .getModuleCalled(moduleName)
          .showNewData(moduleJson);
-   });
-</code></pre>
+   });</code></pre>
 <h2 id="deregistering-a-callback">Deregistering a callback</h2>
 <p>Calling <code>this.forget()</code> from inside a callback deregisters that listener.</p>
-<pre><code class="lang-js">
-// We have a list of items to plot on a map. We want to draw
-// the first ten while they&#39;re loading. After that we want
-// to store the rest in a model to be drawn later.
+<pre><code class="undefinedjs">
+<span class="comment">// We have a list of items to plot on a map. We want to draw</span>
+<span class="comment">// the first ten while they're loading. After that we want</span>
+<span class="comment">// to store the rest in a model to be drawn later.</span>
 
-oboe(&#39;/listOfPlaces&#39;)
-   .node(&#39;list.*&#39;, function( item, path ){
-      var itemIndex = path[path.length-1];
+oboe(<span class="string">'/listOfPlaces'</span>)
+   .node(<span class="string">'list.*'</span>, <span class="keyword">function</span>( item, path ){
+      <span class="keyword">var</span> itemIndex = path[path.length-<span class="number">1</span>];
 
       model.addItemToModel(item);
       view.drawItem(item);
 
-      if( itemIndex == 10 ) {
-         this.forget();
+      <span class="keyword">if</span>( itemIndex == <span class="number">10</span> ) {
+         <span class="keyword">this</span>.forget();
       }
    })
-   .done(function( fullJson ){
-      var undrawnItems = fullJson.list.slice(10);
+   .done(<span class="keyword">function</span>( fullJson ){
+      <span class="keyword">var</span> undrawnItems = fullJson.list.slice(<span class="number">10</span>);
 
       model.addItemsToModel(undrawnItems);
-   });
-</code></pre>
+   });</code></pre>
 <h2 id="css4-style-patterns">Css4 style patterns</h2>
 <p>Sometimes when downloading an array of items it isn&#39;t very useful to be given each element individually.
 It is easier to integrate with libraries like <a href="http://angularjs.org/">Angular</a> if you&#39;re given an array
@@ -380,317 +359,157 @@ repeatedly whenever a new element is concatenated onto it.</p>
 <a href="http://www.w3.org/TR/2011/WD-selectors4-20110929/#subject">proposed css level 4 selector spec</a>.</p>
 <p>If a term is prefixed with a dollar sign, the node matching that term is explicitly selected,
 even if the pattern as a whole matches a node further down the tree.</p>
-<pre><code class="lang-js">// JSON
-{&quot;people&quot;: [
-   {&quot;name&quot;:&quot;Baz&quot;, &quot;age&quot;:34, &quot;email&quot;: &quot;baz@example.com&quot;}
-   {&quot;name&quot;:&quot;Boz&quot;, &quot;age&quot;:24}
-   {&quot;name&quot;:&quot;Bax&quot;, &quot;age&quot;:98, &quot;email&quot;: &quot;bax@example.com&quot;}}
-]}
-</code></pre>
-<pre><code class="lang-js">// we are using Angular and have a controller:
-function PeopleListCtrl($scope) {
+<pre><code class="undefinedjs"><span class="comment">// JSON</span>
+{<span class="string">"people"</span>: [
+   {<span class="string">"name"</span>:<span class="string">"Baz"</span>, <span class="string">"age"</span>:<span class="number">34</span>, <span class="string">"email"</span>: <span class="string">"baz@example.com"</span>}
+   {<span class="string">"name"</span>:<span class="string">"Boz"</span>, <span class="string">"age"</span>:<span class="number">24</span>}
+   {<span class="string">"name"</span>:<span class="string">"Bax"</span>, <span class="string">"age"</span>:<span class="number">98</span>, <span class="string">"email"</span>: <span class="string">"bax@example.com"</span>}}
+]}</code></pre>
+<pre><code class="undefinedjs"><span class="comment">// we are using Angular and have a controller:</span>
+<span class="function"><span class="keyword">function</span> <span class="title">PeopleListCtrl</span><span class="params">(<math title="scope)&lt;/span&gt; {&lt;/span&gt; oboe(&lt;span class=" string"="">'/myapp/things'</math></span>) .node(<span class="string">'"><mi>s</mi><mi>c</mi><mi>o</mi><mi>p</mi><mi>e</mi><mo>)</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mrow><mo>{</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mi>o</mi><mi>b</mi><mi>o</mi><mi>e</mi><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mfrac><mo>'</mo><mi>m</mi></mfrac><mi>y</mi><mi>a</mi><mi>p</mi><mfrac><mi>p</mi><mi>t</mi></mfrac><mi>h</mi><mo>&isin;</mo><mrow><mi>g</mi><mi>s</mi></mrow><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>)</mo></mrow><mo>.</mo><mi>n</mi><mi>o</mi><mi>d</mi><mi>e</mi><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo></mrow></mrow>people[*]'</span>, <span class="keyword">function</span>( peopleLoadedSoFar ){
 
-   oboe(&#39;/myapp/things&#39;)
-      .node(&#39;$people[*]&#39;, function( peopleLoadedSoFar ){
+         <span class="comment">// This callback will be called with a 1-length array,</span>
+         <span class="comment">// a 2-length array, a 3-length array etc until the</span>
+         <span class="comment">// whole thing is loaded.</span>
+         <span class="comment">// Putting this array on the scope object under</span>
+         <span class="comment">// Angular re-renders the list of people.</span>
 
-         // This callback will be called with a 1-length array,
-         // a 2-length array, a 3-length array etc until the
-         // whole thing is loaded.
-         // Putting this array on the scope object under
-         // Angular re-renders the list of people.
+         <math title="scope.people = peopleLoadedSoFar; }); }&lt;/code&gt;&lt;/pre&gt; &lt;p&gt;Like css4 stylesheets, this can also be used to express a &apos;containing&apos; operator.&lt;/p&gt; &lt;pre&gt;&lt;code class=" undefinedjs"="">oboe(<span class="string">'/myapp/things'</span>) .node(<span class="string">'people."><mi>s</mi><mi>c</mi><mi>o</mi><mi>p</mi><mi>e</mi><mo>.</mo><mi>p</mi><mi>e</mi><mi>o</mi><mi>p</mi><mo>&le;</mo><mo>=</mo><mi>p</mi><mi>e</mi><mi>o</mi><mi>p</mi><mo>&le;</mo><mi>L</mi><mi>o</mi><mi>a</mi><mi>d</mi><mi>e</mi><mi>d</mi><mi>S</mi><mi>o</mi><mi>F</mi><mi>a</mi><mi>r</mi><mo>;</mo><mo>}</mo><mo>)</mo><mo>;</mo><mo>}</mo><mfrac><mo>&lt;</mo><mi>c</mi></mfrac><mi>o</mi><mi>d</mi><mi>e</mi><mo>&gt;</mo><mfrac><mo>&lt;</mo><mi>p</mi></mfrac><mi>r</mi><mi>e</mi><mo>&gt;</mo><mo>&lt;</mo><mi>p</mi><mo>&gt;</mo><mi>L</mi><mi>i</mi><mi>k</mi><mi>e</mi><mi>c</mi><mi>s</mi><mi>s</mi><mn>4</mn><mi>s</mi><mi>t</mi><mi>y</mi><mo>&le;</mo><mi>s</mi><mi>h</mi><mi>e</mi><mi>e</mi><mi>t</mi><mi>s</mi><mo>,</mo><mi>t</mi><mi>h</mi><mi>i</mi><mi>s</mi><mi>c</mi><mi>a</mi><mi>n</mi><mi>a</mi><mi>l</mi><mi>s</mi><mi>o</mi><mi>b</mi><mi>e</mi><mi>u</mi><mi>s</mi><mi>e</mi><mi>d</mi><mo>&rarr;</mo><mi>e</mi><mi>x</mi><mi>p</mi><mi>r</mi><mi>e</mi><mi>s</mi><mi>s</mi><mi>a</mi><mo>&amp;</mo><mo>#</mo><mn>39</mn><mo>;</mo><mi>c</mi><mi>o</mi><mi>n</mi><mi>t</mi><mi>a</mi><mo>&isin;</mo><mo>&isin;</mo><mrow><mi>g</mi><mo>&amp;</mo></mrow><mo>#</mo><mn>39</mn><mo>;</mo><mi>o</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>a</mi><mo>&rarr;</mo><mi>r</mi><mo>.</mo><mfrac><mo>&lt;</mo><mi>p</mi></mfrac><mo>&gt;</mo><mo>&lt;</mo><mi>p</mi><mi>r</mi><mi>e</mi><mo>&gt;</mo><mo>&lt;</mo><mi>c</mi><mi>o</mi><mi>d</mi><mi>e</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>n</mi><mi>d</mi><mi>e</mi><mrow><mi>f</mi><mo>&isin;</mo></mrow><mi>e</mi><mi>d</mi><mi>j</mi><mi>s</mi><mrow><mtext></mtext></mrow><mi>o</mi><mi>b</mi><mi>o</mi><mi>e</mi><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mfrac><mo>'</mo><mi>m</mi></mfrac><mi>y</mi><mi>a</mi><mi>p</mi><mfrac><mi>p</mi><mi>t</mi></mfrac><mi>h</mi><mo>&isin;</mo><mrow><mi>g</mi><mi>s</mi></mrow><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>)</mo></mrow><mo>.</mo><mi>n</mi><mi>o</mi><mi>d</mi><mi>e</mi><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mi>p</mi><mi>e</mi><mi>o</mi><mi>p</mi><mo>&le;</mo><mo>.</mo></mrow></span></math>*.email'</span>, <span class="keyword">function</span>(personWithAnEmailAddress){
 
-         $scope.people = peopleLoadedSoFar;
-      });
-}
-</code></pre>
-<p>Like css4 stylesheets, this can also be used to express a &#39;containing&#39; operator.</p>
-<pre><code class="lang-js">oboe(&#39;/myapp/things&#39;)
-   .node(&#39;people.$*.email&#39;, function(personWithAnEmailAddress){
+      <span class="comment">// here we'll be called back with baz</span>
+      <span class="comment">// and bax but not Boz.</span>
 
-      // here we&#39;ll be called back with baz
-      // and bax but not Boz.
-
-   });
-</code></pre>
+   });</code></pre>
 <h2 id="transforming-json-while-it-is-streaming">Transforming JSON while it is streaming</h2>
 <p>Say we have the JSON below:</p>
-<pre><code class="lang-js">[
-   {&quot;verb&quot;:&quot;VISIT&quot;, &quot;noun&quot;:&quot;SHOPS&quot;},
-   {&quot;verb&quot;:&quot;FIND&quot;, &quot;noun&quot;:&quot;WINE&quot;},
-   {&quot;verb&quot;:&quot;MAKE&quot;, &quot;noun&quot;:&quot;PIZZA&quot;}
-]
-</code></pre>
+<pre><code class="undefinedjs">[
+   {<span class="string">"verb"</span>:<span class="string">"VISIT"</span>, <span class="string">"noun"</span>:<span class="string">"SHOPS"</span>},
+   {<span class="string">"verb"</span>:<span class="string">"FIND"</span>, <span class="string">"noun"</span>:<span class="string">"WINE"</span>},
+   {<span class="string">"verb"</span>:<span class="string">"MAKE"</span>, <span class="string">"noun"</span>:<span class="string">"PIZZA"</span>}
+]</code></pre>
 <p>We want to read the JSON but the uppercase is a bit ugly.
 Oboe can transform the nodes as they stream:</p>
-<pre><code class="lang-js">
-function toLower(s){
-   return s.toLowerCase();
+<pre><code class="undefinedjs">
+<span class="function"><span class="keyword">function</span> <span class="title">toLower</span><span class="params">(s)</span>{</span>
+   <span class="keyword">return</span> s.toLowerCase();
 }
 
-oboe(&#39;words.json&#39;)
-   .node(&#39;verb&#39;, toLower)
-   .node(&#39;noun&#39;, toLower)
-   .node(&#39;!.*&#39;, function(pair){
+oboe(<span class="string">'words.json'</span>)
+   .node(<span class="string">'verb'</span>, toLower)
+   .node(<span class="string">'noun'</span>, toLower)
+   .node(<span class="string">'!.*'</span>, <span class="keyword">function</span>(pair){
 
-      console.log(&#39;Please&#39;, pair.verb, &#39;me some&#39;, pair.noun);
-   });
-</code></pre>
+      console.log(<span class="string">'Please'</span>, pair.verb, <span class="string">'me some'</span>, pair.noun);
+   });</code></pre>
 <p>The code above logs:</p>
 <pre><code>Please visit me some shops
 Please find me some wine
-Please make me some pizza
-</code></pre><h2 id="demarshalling-json-to-an-oop-model">Demarshalling JSON to an OOP model</h2>
+Please make me some pizza</code></pre>
+<h2 id="demarshalling-json-to-an-oop-model">Demarshalling JSON to an OOP model</h2>
 <p>If you are programming in an OO style you probably want to instantiate constructors
 based on the values you read from the JSON.</p>
 <p>You can build the OOP model while streaming using Oboe&#39;s node replacement feature:</p>
-<pre><code class="lang-js">function Person(firstName, lastName) {
-   this.firstName = firstName;
-   this.lastName = lastName;
+<pre><code class="undefinedjs"><span class="function"><span class="keyword">function</span> <span class="title">Person</span><span class="params">(firstName, lastName)</span> {</span>
+   <span class="keyword">this</span>.firstName = firstName;
+   <span class="keyword">this</span>.lastName = lastName;
 }
 
-Person.prototype.getFullName = function() {
-   return this.firstName + &#39; &#39; + this.lastName;
+Person.prototype.getFullName = <span class="keyword">function</span>() {
+   <span class="keyword">return</span> <span class="keyword">this</span>.firstName + <span class="string">' '</span> + <span class="keyword">this</span>.lastName;
 }
 
-oboe(&#39;/myapp/people&#39;)
-   .node(&#39;people.*&#39;, function(person){
+oboe(<span class="string">'/myapp/people'</span>)
+   .node(<span class="string">'people.*'</span>, <span class="keyword">function</span>(person){
 
-      // Any value we return from a node callback will replace
-      // the parsed object:
+      <span class="comment">// Any value we return from a node callback will replace</span>
+      <span class="comment">// the parsed object:</span>
 
-      return new Person(person.firstName, person.lastName)
+      <span class="keyword">return</span> <span class="keyword">new</span> Person(person.firstName, person.lastName)
    })
-   .done(function(model){
+   .done(<span class="keyword">function</span>(model){
 
-      // We can call the .getFullName() method directly because the
-      // model here contains Person instances, not plain JS objects
+      <span class="comment">// We can call the .getFullName() method directly because the</span>
+      <span class="comment">// model here contains Person instances, not plain JS objects</span>
 
-      console.log( model.people[1].getFullName() );
-   });
-</code></pre>
+      console.log( model.people[<span class="number">1</span>].getFullName() );
+   });</code></pre>
 <h2 id="loading-json-trees-larger-than-the-available-ram">Loading JSON trees larger than the available RAM</h2>
 <p>By default Oboe assembles the full tree of the JSON that it receives.
 This means that every node is kept in memory for the duration of the parse.</p>
 <p>If you are streaming large resources to avoid memory limitations, you can delete
 any detected node by returning <code>oboe.drop</code> from <a href="api#node-event">the node event</a>.</p>
-<pre><code class="lang-js">// we are getting this large JSON
+<pre><code class="undefinedjs"><span class="comment">// we are getting this large JSON</span>
 {
-   &quot;drinks&quot;:[
-      {&quot;name&quot;:&quot;Orange juice&quot;, &quot;ingredients&quot;:&quot;Oranges&quot;},
-      {&quot;name&quot;:&quot;Wine&quot;, &quot;ingredients&quot;:&quot;Grapes&quot;},
-      {&quot;name&quot;:&quot;Coffee&quot;, &quot;ingredients&quot;:&quot;Roasted Beans&quot;}
+   <span class="string">"drinks"</span>:[
+      {<span class="string">"name"</span>:<span class="string">"Orange juice"</span>, <span class="string">"ingredients"</span>:<span class="string">"Oranges"</span>},
+      {<span class="string">"name"</span>:<span class="string">"Wine"</span>, <span class="string">"ingredients"</span>:<span class="string">"Grapes"</span>},
+      {<span class="string">"name"</span>:<span class="string">"Coffee"</span>, <span class="string">"ingredients"</span>:<span class="string">"Roasted Beans"</span>}
 
-      // ... lots more records ...
+      <span class="comment">// ... lots more records ...</span>
    ]
-}
-</code></pre>
-<pre><code class="lang-js">oboe(&#39;drinks.json&#39;)
-   .node(&#39;!.*&#39;, function(drink){
+}</code></pre>
+<pre><code class="undefinedjs">oboe(<span class="string">'drinks.json'</span>)
+   .node(<span class="string">'!.*'</span>, <span class="keyword">function</span>(drink){
 
-      if( available(drink.ingredients) ) {
+      <span class="keyword">if</span>( available(drink.ingredients) ) {
          startMaking(drink.name);
       }
 
-      // By returning oboe.drop, the parsed JSON object will be freed,
-      // allowing it to be garbage collected.
-      return oboe.drop;
+      <span class="comment">// By returning oboe.drop, the parsed JSON object will be freed,</span>
+      <span class="comment">// allowing it to be garbage collected.</span>
+      <span class="keyword">return</span> oboe.drop;
 
-   }).done(function( finalJson ){
+   }).done(<span class="keyword">function</span>( finalJson ){
 
-      // most of the nodes have been dropped
+      <span class="comment">// most of the nodes have been dropped</span>
 
-      console.log( finalJson );  // logs: {&quot;drinks&quot;:[]}
-   })
-</code></pre>
+      console.log( finalJson );  <span class="comment">// logs: {"drinks":[]}</span>
+   })</code></pre>
 <p>There is also a shorthand form of <code>oboe.drop</code> if you want to drop nodes without examining them first:</p>
-<pre><code class="lang-js">oboe(&#39;drinks.json&#39;)
-   // we don&#39;t care how the drink is made
-   .node(&#39;ingredients&#39;, oboe.drop)
-   .done(function( finalJson ){
+<pre><code class="undefinedjs">oboe(<span class="string">'drinks.json'</span>)
+   <span class="comment">// we don't care how the drink is made</span>
+   .node(<span class="string">'ingredients'</span>, oboe.drop)
+   .done(<span class="keyword">function</span>( finalJson ){
 
       console.log( finalJson.drinks );
-      //  [ {&quot;name&quot;:&quot;Orange juice&quot;}, {&quot;name&quot;:&quot;Wine&quot;}, {&quot;name&quot;:&quot;Coffee&quot;} ]}
-   })
-</code></pre>
+      <span class="comment">//  [ {"name":"Orange juice"}, {"name":"Wine"}, {"name":"Coffee"} ]}</span>
+   })</code></pre>
 <h2 id="streaming-out-html-from-express">Streaming out HTML from express</h2>
 <p>Generating a streamed HTML response from a streamed JSON data service.</p>
-<pre><code class="lang-js">app.get(&#39;/foo&#39;, function(req, res){
-   function writeHtml(err, html){
+<pre><code class="undefinedjs">app.get(<span class="string">'/foo'</span>, <span class="keyword">function</span>(req, res){
+   <span class="function"><span class="keyword">function</span> <span class="title">writeHtml</span><span class="params">(err, html)</span>{</span>
       res.write(html);
    }
 
-   res.render(&#39;pageheader&#39;, writeHtml);
+   res.render(<span class="string">'pageheader'</span>, writeHtml);
 
    oboe( my_stream )
-      .node(&#39;items.*&#39;, function( item ){
-          res.render(&#39;item&#39;, item, writeHtml);
+      .node(<span class="string">'items.*'</span>, <span class="keyword">function</span>( item ){
+          res.render(<span class="string">'item'</span>, item, writeHtml);
       })
-      .done(function() {
-          res.render(&#39;pagefooter&#39;, writeHtml);
+      .done(<span class="keyword">function</span>() {
+          res.render(<span class="string">'pagefooter'</span>, writeHtml);
       })
-});
-</code></pre>
+});</code></pre>
 <h2 id="using-oboe-with-d3-js">Using Oboe with d3.js</h2>
 <p>Oboe works very nicely with <a href="http://d3js.org/">d3.js</a> to add content to
 a visualisation while the JSON downloads.</p>
-<pre><code class="lang-js">// get a (probably empty) d3 selection:
-var things = d3.selectAll(&#39;rect.thing&#39;);
+<pre><code class="undefinedjs"><span class="comment">// get a (probably empty) d3 selection:</span>
+<span class="keyword">var</span> things = d3.selectAll(<span class="string">'rect.thing'</span>);
 
-// Start downloading some data.
-// Every time we see a new thing in the data stream, use
-// d3 to add an element to our visualisation. This pattern
-// should work for most d3 based visualistions.
-oboe(&#39;/data/things&#39;)
-   .node(&#39;$things.*&#39;, function( thingsArray ){
-
-      things.data(thingsArray)
-         .enter().append(&#39;svg:rect&#39;)
-            .classed(&#39;thing&#39;, true)
-            .attr(x, function(d){ return d.x })
-            .attr(y, function(d){ return d.x })
-            .attr(width, function(d){ return d.w })
-            .attr(height, function(d){ return d.h })
-
-      // no need to handle update or exit set here since
-      // downloading is purely additive
-   });
-</code></pre>
-<h2 id="reading-from-node-js-streams">Reading from Node.js streams</h2>
-<p>Instead of giving <code>oboe</code> a URL you can pass any <a href="http://nodejs.org/api/stream.html#stream_class_stream_readable">ReadableStream</a>.
-To load from a local file you&#39;d do this:</p>
-<pre><code class="lang-js">oboe( fs.createReadStream( &#39;/home/me/secretPlans.json&#39; ) )
-   .on(&#39;node&#39;, {
-      &#39;schemes.*&#39;: function(scheme){
-         console.log(&#39;Aha! &#39; + scheme);
-      },
-      &#39;plottings.*&#39;: function(deviousPlot){
-         console.log(&#39;Hmmm! &#39; + deviousPlot);
-      }
-   })
-   .on(&#39;done&#39;, function(){
-      console.log(&quot;*twiddles mustache*&quot;);
-   })
-   .on(&#39;fail&#39;, function(){
-      console.log(&quot;Drat! Foiled again!&quot;);
-   });
-</code></pre>
-<p>Because explicit loops are replaced with pattern-based declarations,
-the code is usually about the same length as with JSON.parse:</p>
-<pre><code class="lang-js">fs.readFile(&#39;/home/me/secretPlans.json&#39;,
-   function(err, plansJson){
-      if(err) {
-         console.log(&quot;Drat! Foiled again!&quot;);
-         return;
-      }
-      var plans = JSON.parse(plansJson);
-
-      plans.schemes.forEach(function(scheme){
-         console.log(&#39;Aha! &#39; + scheme);
-      });
-      plans.plottings.forEach(function(deviousPlot){
-         console.log(&#39;Hmmm! &#39; + deviousPlot);
-      });
-
-      console.log(&quot;*twiddles mustache*&quot;);
-   });
-</code></pre>
-<h2 id="rolling-back-on-error">Rolling back on error</h2>
-<p><a href="api#fail-event">The fail event</a> notifies when something goes wrong.
-If you have started putting elements on the page and the connection
-goes down you have a few options</p>
-<ul>
-<li>If the new elements you added are useful without the rest, leave them. For example, in a web-based email client it is more useful to show some messages than none. See <a href="why#demo-mobile-fail-progressive">dropped connections visualisation</a>.</li>
-<li>If they are useful but you need the rest, make a new request. If the service supports it you need only ask for the missing items.</li>
-<li>Rollback any half-done changes.</li>
-</ul>
-<p>The example below implements rollback.</p>
-<pre><code class="lang-js">var currentPersonElement;
-oboe(&#39;everyone&#39;)
-   .path(&#39;people.*&#39;, function(){
-      // we don&#39;t have the person&#39;s details yet but we know we
-      // found someone in the json stream, we can use this to
-      // eagerly add them to the page:
-      currentPersonElement = $(&#39;&lt;div class=&quot;person&quot;&gt;&#39;);
-      $(&#39;#people&#39;).append(currentPersonElement);
-   })
-   .node(&#39;people.*.name&#39;, function( name ){
-      // we just found out that person&#39;s name, lets add it to
-      // their div:
-      var markup = &#39;&lt;span class=&quot;name&quot;&gt;&#39; + name + &#39;&lt;/span&gt;&#39;;
-      currentPersonElement.append(markup);
-   })
-   .fail(function(){
-      if( currentPersonElement ) {
-         // oops, that didn&#39;t go so well. instead of leaving
-         // this dude half on the page, remove them altogether
-         currentPersonElement.remove();
-      }
-   })
-</code></pre>
-<h2 id="example-patterns">Example patterns</h2>
-<table>
-<thead>
-<tr>
-<th>Pattern</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>*</code></td>
-<td>Every object, string, number etc found in the json stream</td>
-</tr>
-<tr>
-<td><code>!</code></td>
-<td>The root object. Fired when the whole response is available, like JSON.parse()</td>
-</tr>
-<tr>
-<td><code>!.foods.colour</code></td>
-<td>The colours of the foods</td>
-</tr>
-<tr>
-<td><code>person.emails[1]</code></td>
-<td>The first element in the email array for each person</td>
-</tr>
-<tr>
-<td><code>{name email}</code></td>
-<td>Any object with a name and an email property, regardless of where it is in the document</td>
-</tr>
-<tr>
-<td><code>person.emails[*]</code></td>
-<td>Any element in the email array for each person</td>
-</tr>
-<tr>
-<td><code>person.$emails[*]</code></td>
-<td>Any element in the email array for each person, but the callback will be passed the array so far rather than the array elements as they are found.</td>
-</tr>
-<tr>
-<td><code>person</code></td>
-<td>All people in the json, nested at any depth</td>
-</tr>
-<tr>
-<td><code>person.friends.*.name</code></td>
-<td>Detecting friend names in a social network</td>
-</tr>
-<tr>
-<td><code>person.friends..{name}</code></td>
-<td>Detecting friends with names in a social network</td>
-</tr>
-<tr>
-<td><code>person..email</code></td>
-<td>Email addresses anywhere as descendant of a person object</td>
-</tr>
-<tr>
-<td><code>person..{email}</code></td>
-<td>Any object with an email address relating to a person in the stream</td>
-</tr>
-<tr>
-<td><code>$person..email</code></td>
-<td>Any person in the json stream with an email address</td>
-</tr>
-</tbody>
-</table>
-
+<span class="comment">// Start downloading some data.</span>
+<span class="comment">// Every time we see a new thing in the data stream, use</span>
+<span class="comment">// d3 to add an element to our visualisation. This pattern</span>
+<span class="comment">// should work for most d3 based visualistions.</span>
+oboe(<span class="string">'/data/things'</span>)
+   .node(<span class="string">'<math title="things.*&apos;&lt;/span&gt;, &lt;span class=" keyword"="">function</math></span>( thingsArray ){ things.data(thingsArray) .enter().append(<span class="string">'svg:rect'</span>) .classed(<span class="string">'thing'</span>, <span class="literal">true</span>) .attr(x, <span class="keyword">function</span>(d){ <span class="keyword">return</span> d.x }) .attr(y, <span class="keyword">function</span>(d){ <span class="keyword">return</span> d.x }) .attr(width, <span class="keyword">function</span>(d){ <span class="keyword">return</span> d.w }) .attr(height, <span class="keyword">function</span>(d){ <span class="keyword">return</span> d.h }) <span class="comment">// no need to handle update or exit set here since</span> <span class="comment">// downloading is purely additive</span> });</code></pre> <h2 id="reading-from-node-js-streams">Reading from Node.js streams</h2> <p>Instead of giving <code>oboe</code> a URL you can pass any <a href="http://nodejs.org/api/stream.html#stream_class_stream_readable">ReadableStream</a>. To load from a local file you&#39;d do this:</p> <pre><code class="undefinedjs">oboe( fs.createReadStream( <span class="string">'/home/me/secretPlans.json'</span> ) ) .on(<span class="string">'node'</span>, { <span class="string">'schemes.*'</span>: <span class="keyword">function</span>(scheme){ console.log(<span class="string">'Aha! '</span> + scheme); }, <span class="string">'plottings.*'</span>: <span class="keyword">function</span>(deviousPlot){ console.log(<span class="string">'Hmmm! '</span> + deviousPlot); } }) .on(<span class="string">'done'</span>, <span class="keyword">function</span>(){ console.log(<span class="string">"*twiddles mustache*"</span>); }) .on(<span class="string">'fail'</span>, <span class="keyword">function</span>(){ console.log(<span class="string">"Drat! Foiled again!"</span>); });</code></pre> <p>Because explicit loops are replaced with pattern-based declarations, the code is usually about the same length as with JSON.parse:</p> <pre><code class="undefinedjs">fs.readFile(<span class="string">'/home/me/secretPlans.json'</span>, <span class="keyword">function</span>(err, plansJson){ <span class="keyword">if</span>(err) { console.log(<span class="string">"Drat! Foiled again!"</span>); <span class="keyword">return</span>; } <span class="keyword">var</span> plans = JSON.parse(plansJson); plans.schemes.forEach(<span class="keyword">function</span>(scheme){ console.log(<span class="string">'Aha! '</span> + scheme); }); plans.plottings.forEach(<span class="keyword">function</span>(deviousPlot){ console.log(<span class="string">'Hmmm! '</span> + deviousPlot); }); console.log(<span class="string">"*twiddles mustache*"</span>); });</code></pre> <h2 id="rolling-back-on-error">Rolling back on error</h2> <p><a href="api#fail-event">The fail event</a> notifies when something goes wrong. If you have started putting elements on the page and the connection goes down you have a few options</p> <ul> <li>If the new elements you added are useful without the rest, leave them. For example, in a web-based email client it is more useful to show some messages than none. See <a href="why#demo-mobile-fail-progressive">dropped connections visualisation</a>.</li> <li>If they are useful but you need the rest, make a new request. If the service supports it you need only ask for the missing items.</li> <li>Rollback any half-done changes.</li> </ul> <p>The example below implements rollback.</p> <pre><code class="undefinedjs"><span class="keyword">var</span> currentPersonElement; oboe(<span class="string">'everyone'</span>) .path(<span class="string">'people.*'</span>, <span class="keyword">function</span>(){ <span class="comment">// we don't have the person's details yet but we know we</span> <span class="comment">// found someone in the json stream, we can use this to</span> <span class="comment">// eagerly add them to the page:</span> currentPersonElement ="><mi>t</mi><mi>h</mi><mo>&isin;</mo><mrow><mi>g</mi><mi>s</mi></mrow><mo>.</mo><mo>&sdot;</mo><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>,</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mrow><mi>f</mi><mi>u</mi></mrow><mi>n</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mrow><mo>(</mo><mi>t</mi><mi>h</mi><mo>&isin;</mo><mrow><mi>g</mi><mi>s</mi></mrow><mi>A</mi><mi>r</mi><mi>r</mi><mi>a</mi><mi>y</mi><mo>)</mo></mrow><mrow><mo>{</mo><mi>t</mi><mi>h</mi><mo>&isin;</mo><mrow><mi>g</mi><mi>s</mi></mrow><mo>.</mo><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi><mrow><mo>(</mo><mi>t</mi><mi>h</mi><mo>&isin;</mo><mrow><mi>g</mi><mi>s</mi></mrow><mi>A</mi><mi>r</mi><mi>r</mi><mi>a</mi><mi>y</mi><mo>)</mo></mrow><mo>.</mo><mi>e</mi><mi>n</mi><mi>t</mi><mi>e</mi><mi>r</mi><mrow><mo>(</mo><mo>)</mo></mrow><mo>.</mo><mi>a</mi><mi>p</mi><mi>p</mi><mi>e</mi><mi>n</mi><mi>d</mi><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mi>s</mi><mi>v</mi><mrow><mi>g</mi><mo>:</mo></mrow><mi>r</mi><mi>e</mi><mi>c</mi><mi>t</mi><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>)</mo></mrow><mo>.</mo><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mi>e</mi><mi>d</mi><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mi>t</mi><mi>h</mi><mo>&isin;</mo><mrow><mi>g</mi><mo>'</mo></mrow><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>,</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>i</mi><mi>t</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>l</mi><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mi>u</mi><mi>e</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>)</mo></mrow><mo>.</mo><mi>a</mi><mstyle fontfamily="monospace"><mi>r</mi></mstyle><mrow><mo>(</mo><mi>x</mi><mo>,</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mrow><mi>f</mi><mi>u</mi></mrow><mi>n</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mrow><mo>(</mo><mi>d</mi><mo>)</mo></mrow><mrow><mo>{</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mi>r</mi><mi>e</mi><mi>t</mi><mi>u</mi><mi>r</mi><mi>n</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mi>d</mi><mo>.</mo><mi>x</mi><mo>}</mo></mrow><mo>)</mo></mrow><mo>.</mo><mi>a</mi><mstyle fontfamily="monospace"><mi>r</mi></mstyle><mrow><mo>(</mo><mi>y</mi><mo>,</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mrow><mi>f</mi><mi>u</mi></mrow><mi>n</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mrow><mo>(</mo><mi>d</mi><mo>)</mo></mrow><mrow><mo>{</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mi>r</mi><mi>e</mi><mi>t</mi><mi>u</mi><mi>r</mi><mi>n</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mi>d</mi><mo>.</mo><mi>x</mi><mo>}</mo></mrow><mo>)</mo></mrow><mo>.</mo><mi>a</mi><mstyle fontfamily="monospace"><mi>r</mi></mstyle><mrow><mo>(</mo><mi>w</mi><mi>i</mi><mrow><mi>d</mi><mi>t</mi></mrow><mi>h</mi><mo>,</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mrow><mi>f</mi><mi>u</mi></mrow><mi>n</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mrow><mo>(</mo><mi>d</mi><mo>)</mo></mrow><mrow><mo>{</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mi>r</mi><mi>e</mi><mi>t</mi><mi>u</mi><mi>r</mi><mi>n</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mi>d</mi><mo>.</mo><mi>w</mi><mo>}</mo></mrow><mo>)</mo></mrow><mo>.</mo><mi>a</mi><mstyle fontfamily="monospace"><mi>r</mi></mstyle><mrow><mo>(</mo><mi>h</mi><mi>e</mi><mi>i</mi><mrow><mi>g</mi><mi>h</mi></mrow><mi>t</mi><mo>,</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mrow><mi>f</mi><mi>u</mi></mrow><mi>n</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mrow><mo>(</mo><mi>d</mi><mo>)</mo></mrow><mrow><mo>{</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mi>r</mi><mi>e</mi><mi>t</mi><mi>u</mi><mi>r</mi><mi>n</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mi>d</mi><mo>.</mo><mi>h</mi><mo>}</mo></mrow><mo>)</mo></mrow><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>o</mi><mi>m</mi><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mrow><mtext></mtext></mrow><mo>/</mo><mi>n</mi><mi>o</mi><mo>&ne;</mo><mi>e</mi><mi>d</mi><mo>&rarr;</mo><mi>h</mi><mrow><mspace width="1ex"></mspace><mtext>and</mtext><mspace width="1ex"></mspace></mrow><mo>&le;</mo><mi>u</mi><mi>p</mi><mi>d</mi><mi>a</mi><mi>t</mi><mi>e</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>e</mi><mi>&xi;</mi><mi>t</mi><mi>s</mi><mi>e</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>r</mi><mi>e</mi><mrow><mo>sin</mo><mi>c</mi></mrow><mi>e</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>o</mi><mi>m</mi><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mrow><mtext></mtext></mrow><mo>/</mo><mi>d</mi><mi>o</mi><mi>w</mi><mi>n</mi><mi>l</mi><mi>o</mi><mi>a</mi><mi>d</mi><mo>&isin;</mo><mrow><mi>g</mi><mi>i</mi></mrow><mi>s</mi><mi>p</mi><mi>u</mi><mi>r</mi><mi>e</mi><mi>l</mi><mi>y</mi><mi>a</mi><mi>d</mi><mi>d</mi><mi>i</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>e</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>}</mo></mrow><mo>)</mo><mo>;</mo><mfrac><mo>&lt;</mo><mi>c</mi></mfrac><mi>o</mi><mi>d</mi><mi>e</mi><mo>&gt;</mo><mfrac><mo>&lt;</mo><mi>p</mi></mfrac><mi>r</mi><mi>e</mi><mo>&gt;</mo><mo>&lt;</mo><mi>h</mi><mn>2</mn><mi>i</mi><mi>d</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>a</mi><mi>d</mi><mo>&isin;</mo><mrow><mi>g</mi><mo>-</mo></mrow><mstyle mathvariant="fraktur"><mo>o</mo></mstyle><mi>m</mi><mo>-</mo><mi>n</mi><mi>o</mi><mi>d</mi><mi>e</mi><mo>-</mo><mi>j</mi><mi>s</mi><mo>-</mo><mi>s</mi><mi>t</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi><mi>s</mi><mrow><mtext></mtext></mrow><mi>R</mi><mi>e</mi><mi>a</mi><mi>d</mi><mo>&isin;</mo><mrow><mi>g</mi><mstyle mathvariant="fraktur"><mo>o</mo></mstyle></mrow><mi>m</mi><mi>N</mi><mi>o</mi><mi>d</mi><mi>e</mi><mo>.</mo><mi>j</mi><mi>s</mi><mi>s</mi><mi>t</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi><mi>s</mi><mfrac><mo>&lt;</mo><mi>h</mi></mfrac><mn>2</mn><mo>&gt;</mo><mo>&lt;</mo><mi>p</mi><mo>&gt;</mo><mi>I</mi><mi>n</mi><mi>s</mi><mi>t</mi><mi>e</mi><mi>a</mi><mi>d</mi><mi>o</mi><mrow><mi>f</mi><mrow><mi>g</mi><mi>i</mi></mrow></mrow><mi>v</mi><mo>&isin;</mo><mrow><mi>g</mi><mo>&lt;</mo></mrow><mi>c</mi><mi>o</mi><mi>d</mi><mi>e</mi><mo>&gt;</mo><mi>o</mi><mi>b</mi><mi>o</mi><mi>e</mi><mfrac><mo>&lt;</mo><mi>c</mi></mfrac><mi>o</mi><mi>d</mi><mi>e</mi><mo>&gt;</mo><mi>a</mi><mi>U</mi><mi>R</mi><mi>L</mi><mi>y</mi><mi>o</mi><mi>u</mi><mi>c</mi><mi>a</mi><mi>n</mi><mi>p</mi><mi>a</mi><mi>s</mi><mi>s</mi><mi>a</mi><mi>n</mi><mi>y</mi><mo>&lt;</mo><mi>a</mi><mi>h</mi><mi>r</mi><mi>e</mi><mrow><mi>f</mi><mo>=</mo></mrow><mrow><mtext></mtext></mrow><mstyle fontfamily="monospace"><mi>p</mi></mstyle><mo>:</mo><mo>/</mo><mi>n</mi><mi>o</mi><mi>d</mi><mi>e</mi><mi>j</mi><mi>s</mi><mo>.</mo><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mfrac><mi>g</mi><mi>a</mi></mfrac><mfrac><mi>&pi;</mi><mi>s</mi></mfrac><mi>t</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi><mo>.</mo><mi>h</mi><mi>t</mi><mi>m</mi><mi>l</mi><mo>#</mo><mi>s</mi><mi>t</mi><mi>r</mi><mi>e</mi><mi>a</mi><msub><mi>m</mi><mi>c</mi></msub><mi>l</mi><mi>a</mi><mi>s</mi><msub><mi>s</mi><mi>s</mi></msub><mi>t</mi><mi>r</mi><mi>e</mi><mi>a</mi><msub><mi>m</mi><mi>r</mi></msub><mi>e</mi><mi>a</mi><mi>d</mi><mi>a</mi><mi>b</mi><mo>&le;</mo><mrow><mtext></mtext></mrow><mi>R</mi><mi>e</mi><mi>a</mi><mi>d</mi><mi>a</mi><mi>b</mi><mo>&le;</mo><mi>S</mi><mi>t</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi><mfrac><mo>&lt;</mo><mi>a</mi></mfrac><mo>&gt;</mo><mo>.</mo><mi>T</mi><mi>o</mi><mi>l</mi><mi>o</mi><mi>a</mi><mi>d</mi><mstyle mathvariant="fraktur"><mo>o</mo></mstyle><mi>m</mi><mi>a</mi><mi>l</mi><mi>o</mi><mi>c</mi><mi>a</mi><mi>l</mi><mrow><mi>f</mi><mi>i</mi></mrow><mo>&le;</mo><mi>y</mi><mi>o</mi><mi>u</mi><mo>&amp;</mo><mo>#</mo><mn>39</mn><mo>;</mo><mi>d</mi><mi>d</mi><mi>o</mi><mi>t</mi><mi>h</mi><mi>i</mi><mi>s</mi><mo>:</mo><mfrac><mo>&lt;</mo><mi>p</mi></mfrac><mo>&gt;</mo><mo>&lt;</mo><mi>p</mi><mi>r</mi><mi>e</mi><mo>&gt;</mo><mo>&lt;</mo><mi>c</mi><mi>o</mi><mi>d</mi><mi>e</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>n</mi><mi>d</mi><mi>e</mi><mrow><mi>f</mi><mo>&isin;</mo></mrow><mi>e</mi><mi>d</mi><mi>j</mi><mi>s</mi><mrow><mtext></mtext></mrow><mi>o</mi><mi>b</mi><mi>o</mi><mi>e</mi><mrow><mo>(</mo><mrow><mi>f</mi><mi>s</mi></mrow><mo>.</mo><mi>c</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>t</mi><mi>e</mi><mi>R</mi><mi>e</mi><mi>a</mi><mi>d</mi><mi>S</mi><mi>t</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mfrac><mo>'</mo><mi>h</mi></mfrac><mi>o</mi><mi>m</mi><mfrac><mi>e</mi><mi>m</mi></mfrac><mfrac><mi>e</mi><mrow><mo>sec</mo><mi>r</mi></mrow></mfrac><mi>e</mi><mi>t</mi><mi>P</mi><mi>l</mi><mi>a</mi><mi>n</mi><mi>s</mi><mo>.</mo><mi>j</mi><mi>s</mi><mi>o</mi><mi>n</mi><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>)</mo></mrow><mo>)</mo></mrow><mo>.</mo><mi>o</mi><mi>n</mi><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mi>n</mi><mi>o</mi><mi>d</mi><mi>e</mi><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>,</mo><mrow><mo>{</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mi>s</mi><mi>c</mi><mi>h</mi><mi>e</mi><mi>m</mi><mi>e</mi><mi>s</mi><mo>.</mo><mo>&sdot;</mo><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>:</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mrow><mi>f</mi><mi>u</mi></mrow><mi>n</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mrow><mo>(</mo><mi>s</mi><mi>c</mi><mi>h</mi><mi>e</mi><mi>m</mi><mi>e</mi><mo>)</mo></mrow><mrow><mo>{</mo><mi>c</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>o</mi><mo>&le;</mo><mo>.</mo><mrow><mo>log</mo><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mi>A</mi><mi>h</mi><mi>a</mi><mo>!</mo><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>+</mo><mi>s</mi><mi>c</mi><mi>h</mi><mi>e</mi><mi>m</mi><mi>e</mi><mo>)</mo></mrow></mrow><mo>;</mo><mo>}</mo></mrow><mo>,</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mi>p</mi><mi>l</mi><mi>o</mi><mstyle fontfamily="monospace"><mo>&isin;</mo></mstyle><mrow><mi>g</mi><mi>s</mi></mrow><mo>.</mo><mo>&sdot;</mo><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>:</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mrow><mi>f</mi><mi>u</mi></mrow><mi>n</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mrow><mo>(</mo><mi>d</mi><mi>e</mi><mi>v</mi><mi>i</mi><mi>o</mi><mi>u</mi><mi>s</mi><mi>P</mi><mi>l</mi><mi>o</mi><mi>t</mi><mo>)</mo></mrow><mrow><mo>{</mo><mi>c</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>o</mi><mo>&le;</mo><mo>.</mo><mrow><mo>log</mo><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mi>H</mi><mi>m</mi><mi>m</mi><mi>m</mi><mo>!</mo><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>+</mo><mi>d</mi><mi>e</mi><mi>v</mi><mi>i</mi><mi>o</mi><mi>u</mi><mi>s</mi><mi>P</mi><mi>l</mi><mi>o</mi><mi>t</mi><mo>)</mo></mrow></mrow><mo>;</mo><mo>}</mo></mrow><mo>}</mo></mrow><mo>)</mo></mrow><mo>.</mo><mi>o</mi><mi>n</mi><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mi>d</mi><mi>o</mi><mo>&ne;</mo><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>,</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mrow><mi>f</mi><mi>u</mi></mrow><mi>n</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mrow><mo>(</mo><mo>)</mo></mrow><mrow><mo>{</mo><mi>c</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>o</mi><mo>&le;</mo><mo>.</mo><mrow><mo>log</mo><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mrow><mtext></mtext></mrow><mi>t</mi><mi>w</mi><mi>i</mi><mi>d</mi><mi>d</mi><mo>&le;</mo><mi>s</mi><mi>&mu;</mi><mi>s</mi><mi>t</mi><mi>a</mi><mi>c</mi><mi>h</mi><mi>e</mi><mo>&sdot;</mo><mfrac><mrow><mtext></mtext></mrow><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>)</mo></mrow></mrow><mo>;</mo><mo>}</mo></mrow><mo>)</mo></mrow><mo>.</mo><mi>o</mi><mi>n</mi><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mrow><mi>f</mi><mi>a</mi></mrow><mi>i</mi><mi>l</mi><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>,</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mrow><mi>f</mi><mi>u</mi></mrow><mi>n</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mrow><mo>(</mo><mo>)</mo></mrow><mrow><mo>{</mo><mi>c</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>o</mi><mo>&le;</mo><mo>.</mo><mrow><mo>log</mo><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mrow><mtext></mtext></mrow><mi>r</mi><mi>a</mi><mi>t</mi><mo>!</mo><mi>F</mi><mi>o</mi><mi>i</mi><mo>&le;</mo><mi>d</mi><mi>a</mi><mrow><mi>g</mi><mi>a</mi></mrow><mo>&isin;</mo><mo>!</mo><mfrac><mrow><mtext></mtext></mrow><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>)</mo></mrow></mrow><mo>;</mo><mo>}</mo></mrow><mo>)</mo></mrow><mo>;</mo><mfrac><mo>&lt;</mo><mi>c</mi></mfrac><mi>o</mi><mi>d</mi><mi>e</mi><mo>&gt;</mo><mfrac><mo>&lt;</mo><mi>p</mi></mfrac><mi>r</mi><mi>e</mi><mo>&gt;</mo><mo>&lt;</mo><mi>p</mi><mo>&gt;</mo><mi>B</mi><mi>e</mi><mi>c</mi><mi>a</mi><mi>u</mi><mi>s</mi><mi>e</mi><mi>e</mi><mi>x</mi><mi>p</mi><mi>l</mi><mi>i</mi><mi>c</mi><mi>i</mi><mi>t</mi><mi>l</mi><mo>&infin;</mo><mi>p</mi><mi>s</mi><mi>a</mi><mi>r</mi><mi>e</mi><mi>r</mi><mi>e</mi><mi>p</mi><mi>l</mi><mi>a</mi><mi>c</mi><mi>e</mi><mi>d</mi><mi>w</mi><mi>i</mi><mi>t</mi><mi>h</mi><mi>p</mi><mi>a</mi><mstyle fontfamily="monospace"><mi>e</mi></mstyle><mi>r</mi><mi>n</mi><mo>-</mo><mi>b</mi><mi>a</mi><mi>s</mi><mi>e</mi><mi>d</mi><mi>d</mi><mi>e</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>s</mi><mo>,</mo><mi>t</mi><mi>h</mi><mi>e</mi><mi>c</mi><mi>o</mi><mi>d</mi><mi>e</mi><mi>i</mi><mi>s</mi><mi>u</mi><mi>s</mi><mi>u</mi><mi>a</mi><mi>l</mi><mi>l</mi><mi>y</mi><mi>a</mi><mi>b</mi><mi>o</mi><mi>u</mi><mi>t</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>s</mi><mi>a</mi><mi>m</mi><mi>e</mi><mo>&le;</mo><mi>n</mi><mrow><mi>g</mi><mi>t</mi></mrow><mi>h</mi><mi>a</mi><mi>s</mi><mi>w</mi><mi>i</mi><mi>t</mi><mi>h</mi><mi>J</mi><mi>S</mi><mi>O</mi><mi>N</mi><mo>.</mo><mi>p</mi><mi>a</mi><mi>r</mi><mi>s</mi><mi>e</mi><mo>:</mo><mfrac><mo>&lt;</mo><mi>p</mi></mfrac><mo>&gt;</mo><mo>&lt;</mo><mi>p</mi><mi>r</mi><mi>e</mi><mo>&gt;</mo><mo>&lt;</mo><mi>c</mi><mi>o</mi><mi>d</mi><mi>e</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>n</mi><mi>d</mi><mi>e</mi><mrow><mi>f</mi><mo>&isin;</mo></mrow><mi>e</mi><mi>d</mi><mi>j</mi><mi>s</mi><mrow><mtext></mtext></mrow><mrow><mi>f</mi><mi>s</mi></mrow><mo>.</mo><mi>r</mi><mi>e</mi><mi>a</mi><mi>d</mi><mi>F</mi><mi>i</mi><mo>&le;</mo><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mfrac><mo>'</mo><mi>h</mi></mfrac><mi>o</mi><mi>m</mi><mfrac><mi>e</mi><mi>m</mi></mfrac><mfrac><mi>e</mi><mrow><mo>sec</mo><mi>r</mi></mrow></mfrac><mi>e</mi><mi>t</mi><mi>P</mi><mi>l</mi><mi>a</mi><mi>n</mi><mi>s</mi><mo>.</mo><mi>j</mi><mi>s</mi><mi>o</mi><mi>n</mi><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>,</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mrow><mi>f</mi><mi>u</mi></mrow><mi>n</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mrow><mo>(</mo><mi>e</mi><mi>r</mi><mi>r</mi><mo>,</mo><mi>p</mi><mi>l</mi><mi>a</mi><mi>n</mi><mi>s</mi><mi>J</mi><mi>s</mi><mi>o</mi><mi>n</mi><mo>)</mo></mrow><mrow><mo>{</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mrow><mspace width="1ex"></mspace><mo>if</mo><mspace width="1ex"></mspace></mrow><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mrow><mo>(</mo><mi>e</mi><mi>r</mi><mi>r</mi><mo>)</mo></mrow><mrow><mo>{</mo><mi>c</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>o</mi><mo>&le;</mo><mo>.</mo><mrow><mo>log</mo><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mrow><mtext></mtext></mrow><mi>r</mi><mi>a</mi><mi>t</mi><mo>!</mo><mi>F</mi><mi>o</mi><mi>i</mi><mo>&le;</mo><mi>d</mi><mi>a</mi><mrow><mi>g</mi><mi>a</mi></mrow><mo>&isin;</mo><mo>!</mo><mfrac><mrow><mtext></mtext></mrow><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>)</mo></mrow></mrow><mo>;</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mi>r</mi><mi>e</mi><mi>t</mi><mi>u</mi><mi>r</mi><mi>n</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>;</mo><mo>}</mo></mrow><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mi>v</mi><mi>a</mi><mi>r</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mi>p</mi><mi>l</mi><mi>a</mi><mi>n</mi><mi>s</mi><mo>=</mo><mi>J</mi><mi>S</mi><mi>O</mi><mi>N</mi><mo>.</mo><mi>p</mi><mi>a</mi><mi>r</mi><mi>s</mi><mi>e</mi><mrow><mo>(</mo><mi>p</mi><mi>l</mi><mi>a</mi><mi>n</mi><mi>s</mi><mi>J</mi><mi>s</mi><mi>o</mi><mi>n</mi><mo>)</mo></mrow><mo>;</mo><mi>p</mi><mi>l</mi><mi>a</mi><mi>n</mi><mi>s</mi><mo>.</mo><mi>s</mi><mi>c</mi><mi>h</mi><mi>e</mi><mi>m</mi><mi>e</mi><mi>s</mi><mo>.</mo><mrow><mi>f</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow></mrow><mi>E</mi><mi>a</mi><mi>c</mi><mi>h</mi><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mrow><mi>f</mi><mi>u</mi></mrow><mi>n</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mrow><mo>(</mo><mi>s</mi><mi>c</mi><mi>h</mi><mi>e</mi><mi>m</mi><mi>e</mi><mo>)</mo></mrow><mrow><mo>{</mo><mi>c</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>o</mi><mo>&le;</mo><mo>.</mo><mrow><mo>log</mo><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mi>A</mi><mi>h</mi><mi>a</mi><mo>!</mo><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>+</mo><mi>s</mi><mi>c</mi><mi>h</mi><mi>e</mi><mi>m</mi><mi>e</mi><mo>)</mo></mrow></mrow><mo>;</mo><mo>}</mo></mrow><mo>)</mo></mrow><mo>;</mo><mi>p</mi><mi>l</mi><mi>a</mi><mi>n</mi><mi>s</mi><mo>.</mo><mi>p</mi><mi>l</mi><mi>o</mi><mstyle fontfamily="monospace"><mo>&isin;</mo></mstyle><mrow><mi>g</mi><mi>s</mi></mrow><mo>.</mo><mrow><mi>f</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow></mrow><mi>E</mi><mi>a</mi><mi>c</mi><mi>h</mi><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mrow><mi>f</mi><mi>u</mi></mrow><mi>n</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mrow><mo>(</mo><mi>d</mi><mi>e</mi><mi>v</mi><mi>i</mi><mi>o</mi><mi>u</mi><mi>s</mi><mi>P</mi><mi>l</mi><mi>o</mi><mi>t</mi><mo>)</mo></mrow><mrow><mo>{</mo><mi>c</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>o</mi><mo>&le;</mo><mo>.</mo><mrow><mo>log</mo><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mi>H</mi><mi>m</mi><mi>m</mi><mi>m</mi><mo>!</mo><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>+</mo><mi>d</mi><mi>e</mi><mi>v</mi><mi>i</mi><mi>o</mi><mi>u</mi><mi>s</mi><mi>P</mi><mi>l</mi><mi>o</mi><mi>t</mi><mo>)</mo></mrow></mrow><mo>;</mo><mo>}</mo></mrow><mo>)</mo></mrow><mo>;</mo><mi>c</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>o</mi><mo>&le;</mo><mo>.</mo><mrow><mo>log</mo><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mrow><mtext></mtext></mrow><mi>t</mi><mi>w</mi><mi>i</mi><mi>d</mi><mi>d</mi><mo>&le;</mo><mi>s</mi><mi>&mu;</mi><mi>s</mi><mi>t</mi><mi>a</mi><mi>c</mi><mi>h</mi><mi>e</mi><mo>&sdot;</mo><mfrac><mrow><mtext></mtext></mrow><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>)</mo></mrow></mrow><mo>;</mo><mo>}</mo></mrow><mo>)</mo></mrow><mo>;</mo><mfrac><mo>&lt;</mo><mi>c</mi></mfrac><mi>o</mi><mi>d</mi><mi>e</mi><mo>&gt;</mo><mfrac><mo>&lt;</mo><mi>p</mi></mfrac><mi>r</mi><mi>e</mi><mo>&gt;</mo><mo>&lt;</mo><mi>h</mi><mn>2</mn><mi>i</mi><mi>d</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>o</mi><mi>l</mi><mi>l</mi><mo>&isin;</mo><mrow><mi>g</mi><mo>-</mo></mrow><mi>b</mi><mi>a</mi><mi>c</mi><mi>k</mi><mo>-</mo><mi>o</mi><mi>n</mi><mo>-</mo><mi>e</mi><mi>r</mi><mi>r</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mrow><mtext></mtext></mrow><mi>R</mi><mi>o</mi><mi>l</mi><mi>l</mi><mo>&isin;</mo><mrow><mi>g</mi><mi>b</mi></mrow><mi>a</mi><mi>c</mi><mi>k</mi><mi>o</mi><mi>n</mi><mi>e</mi><mi>r</mi><mi>r</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mfrac><mo>&lt;</mo><mi>h</mi></mfrac><mn>2</mn><mo>&gt;</mo><mo>&lt;</mo><mi>p</mi><mo>&gt;</mo><mo>&lt;</mo><mi>a</mi><mi>h</mi><mi>r</mi><mi>e</mi><mrow><mi>f</mi><mo>=</mo></mrow><mrow><mtext></mtext></mrow><mi>&pi;</mi><mo>#</mo><mrow><mi>f</mi><mi>a</mi></mrow><mi>i</mi><mi>l</mi><mo>-</mo><mi>e</mi><mi>v</mi><mi>e</mi><mi>n</mi><mi>t</mi><mrow><mtext></mtext></mrow><mi>T</mi><mi>h</mi><mi>e</mi><mrow><mi>f</mi><mi>a</mi></mrow><mi>i</mi><mi>l</mi><mi>e</mi><mi>v</mi><mi>e</mi><mi>n</mi><mi>t</mi><mfrac><mo>&lt;</mo><mi>a</mi></mfrac><mo>&gt;</mo><mo>&not;</mo><mrow><mspace width="1ex"></mspace><mo>if</mo><mspace width="1ex"></mspace></mrow><mi>i</mi><mi>e</mi><mi>s</mi><mi>w</mi><mi>h</mi><mi>e</mi><mi>n</mi><mi>s</mi><mi>o</mi><mi>m</mi><mi>e</mi><mi>t</mi><mi>h</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mi>g</mi><mi>o</mi></mrow></mrow><mi>e</mi><mi>s</mi><mi>w</mi><mi>r</mi><mi>o</mi><mi>n</mi><mrow><mi>g</mi><mo>.</mo></mrow><mi>I</mi><mrow><mi>f</mi><mi>y</mi></mrow><mi>o</mi><mi>u</mi><mi>h</mi><mi>a</mi><mi>v</mi><mi>e</mi><mo>&#8902;</mo><mi>t</mi><mi>e</mi><mi>d</mi><mi>p</mi><mi>u</mi><mstyle fontfamily="monospace"><mo>&isin;</mo></mstyle><mrow><mi>g</mi><mi>e</mi></mrow><mo>&le;</mo><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>s</mi><mi>o</mi><mi>n</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>p</mi><mi>a</mi><mo>&ge;</mo><mrow><mspace width="1ex"></mspace><mtext>and</mtext><mspace width="1ex"></mspace></mrow><mi>t</mi><mi>h</mi><mi>e</mi><mi>c</mi><mi>o</mi><mo>&cap;</mo><mi>e</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mrow><mi>g</mi><mi>o</mi></mrow><mi>e</mi><mi>s</mi><mi>d</mi><mi>o</mi><mi>w</mi><mi>n</mi><mi>y</mi><mi>o</mi><mi>u</mi><mi>h</mi><mi>a</mi><mi>v</mi><mi>e</mi><mi>a</mi><mrow><mi>f</mi><mi>e</mi></mrow><mi>w</mi><mi>o</mi><mi>p</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>s</mi><mfrac><mo>&lt;</mo><mi>p</mi></mfrac><mo>&gt;</mo><mo>&lt;</mo><munder><mo>&gt;</mo><mo>&#818;</mo></munder><mo>&lt;</mo><mi>l</mi><mi>i</mi><mo>&gt;</mo><mi>I</mi><mrow><mi>f</mi><mi>t</mi></mrow><mi>h</mi><mi>e</mi><mo>&ne;</mo><mi>w</mi><mi>e</mi><mo>&le;</mo><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>s</mi><mi>y</mi><mi>o</mi><mi>u</mi><mi>a</mi><mi>d</mi><mi>d</mi><mi>e</mi><mi>d</mi><mi>a</mi><mi>r</mi><mi>e</mi><mi>u</mi><mi>s</mi><mi>e</mi><mrow><mi>f</mi><munder><mi>w</mi><mo>&#818;</mo></munder></mrow><mi>i</mi><mi>t</mi><mi>h</mi><mi>o</mi><mi>u</mi><mi>t</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>r</mi><mi>e</mi><mi>s</mi><mi>t</mi><mo>,</mo><mo>&le;</mo><mi>a</mi><mi>v</mi><mi>e</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>m</mi><mo>.</mo><mi>F</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>e</mi><mi>x</mi><mi>a</mi><mi>m</mi><mi>p</mi><mo>&le;</mo><mo>,</mo><mo>&isin;</mo><mi>a</mi><mi>w</mi><mi>e</mi><mi>b</mi><mo>-</mo><mi>b</mi><mi>a</mi><mi>s</mi><mi>e</mi><mi>d</mi><mi>e</mi><mi>m</mi><mi>a</mi><mi>i</mi><mi>l</mi><mi>c</mi><mi>l</mi><mi>i</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>i</mi><mi>t</mi><mi>i</mi><mi>s</mi><mi>m</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>e</mi><mi>u</mi><mi>s</mi><mi>e</mi><mrow><mi>f</mi><munder><mo>&rarr;</mo><mo>&#818;</mo></munder></mrow><mi>s</mi><mi>h</mi><mi>o</mi><mi>w</mi><mi>s</mi><mi>o</mi><mi>m</mi><mi>e</mi><mi>m</mi><mi>e</mi><mi>s</mi><mi>s</mi><mi>a</mi><mo>&ge;</mo><mi>s</mi><mi>t</mi><mi>h</mi><mi>a</mi><mi>n</mi><mi>n</mi><mi>o</mi><mo>&ne;</mo><mo>.</mo><mi>S</mi><mi>e</mi><mi>e</mi><mo>&lt;</mo><mi>a</mi><mi>h</mi><mi>r</mi><mi>e</mi><mrow><mi>f</mi><mo>=</mo></mrow><mrow><mtext></mtext></mrow><mi>h</mi><mi>y</mi><mo>#</mo><mi>d</mi><mi>e</mi><mi>m</mi><mi>o</mi><mo>-</mo><mi>m</mi><mi>o</mi><mi>b</mi><mi>i</mi><mo>&le;</mo><mo>-</mo><mrow><mi>f</mi><mi>a</mi></mrow><mi>i</mi><mi>l</mi><mo>-</mo><mi>p</mi><mi>r</mi><mi>o</mi><mrow><mi>g</mi><mi>r</mi></mrow><mi>e</mi><mi>s</mi><mi>s</mi><mi>i</mi><mi>v</mi><mi>e</mi><mrow><mtext></mtext></mrow><mi>d</mi><mi>r</mi><mi>o</mi><mi>p</mi><mi>p</mi><mi>e</mi><mi>d</mi><mi>c</mi><mi>o</mi><mo>&cap;</mo><mi>e</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>v</mi><mi>i</mi><mi>s</mi><mi>u</mi><mi>a</mi><mi>l</mi><mi>i</mi><mi>s</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mfrac><mo>&lt;</mo><mi>a</mi></mfrac><mo>&gt;</mo><mo>.</mo><mfrac><mo>&lt;</mo><mi>l</mi></mfrac><mi>i</mi><mo>&gt;</mo><mo>&lt;</mo><mi>l</mi><mi>i</mi><mo>&gt;</mo><mi>I</mi><mrow><mi>f</mi><mi>t</mi></mrow><mi>h</mi><mi>e</mi><mi>y</mi><mi>a</mi><mi>r</mi><mi>e</mi><mi>u</mi><mi>s</mi><mi>e</mi><mrow><mi>f</mi><munder><mi>b</mi><mo>&#818;</mo></munder></mrow><mi>u</mi><mi>t</mi><mi>y</mi><mi>o</mi><mi>u</mi><mo>&ne;</mo><mi>e</mi><mi>d</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>r</mi><mi>e</mi><mi>s</mi><mi>t</mi><mo>,</mo><mi>m</mi><mi>a</mi><mi>k</mi><mi>e</mi><mi>a</mi><mo>&ne;</mo><mi>w</mi><mi>r</mi><mi>e</mi><mi>q</mi><mi>u</mi><mi>e</mi><mi>s</mi><mi>t</mi><mo>.</mo><mi>I</mi><mrow><mi>f</mi><mi>t</mi></mrow><mi>h</mi><mi>e</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>v</mi><mi>i</mi><mi>c</mi><mi>e</mi><mo>&sup;</mo><mi>p</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>t</mi><mi>s</mi><mi>i</mi><mi>t</mi><mi>y</mi><mi>o</mi><mi>u</mi><mo>&ne;</mo><mi>e</mi><mi>d</mi><mi>o</mi><mi>n</mi><mi>l</mi><mi>y</mi><mi>a</mi><mi>s</mi><mi>k</mi><mrow><mi>f</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow></mrow><mi>t</mi><mi>h</mi><mi>e</mi><mi>m</mi><mi>i</mi><mi>s</mi><mrow><mo>sin</mo><mrow><mi>g</mi><mi>i</mi></mrow></mrow><mi>t</mi><mi>e</mi><mi>m</mi><mi>s</mi><mo>.</mo><mfrac><mo>&lt;</mo><mi>l</mi></mfrac><mi>i</mi><mo>&gt;</mo><mo>&lt;</mo><mi>l</mi><mi>i</mi><mo>&gt;</mo><mi>R</mi><mi>o</mi><mi>l</mi><mi>l</mi><mi>b</mi><mi>a</mi><mi>c</mi><mi>k</mi><mi>a</mi><mi>n</mi><mi>y</mi><mi>h</mi><mi>a</mi><mi>l</mi><mrow><mi>f</mi><mo>-</mo></mrow><mi>d</mi><mi>o</mi><mo>&ne;</mo><mi>c</mi><mi>h</mi><mi>a</mi><mi>n</mi><mo>&ge;</mo><mi>s</mi><mo>.</mo><mfrac><mo>&lt;</mo><mi>l</mi></mfrac><mi>i</mi><mo>&gt;</mo><mfrac><mo>&lt;</mo><munder><mo>&gt;</mo><mo>&#818;</mo></munder></mfrac><mo>&lt;</mo><mi>p</mi><mo>&gt;</mo><mi>T</mi><mi>h</mi><mi>e</mi><mi>e</mi><mi>x</mi><mi>a</mi><mi>m</mi><mi>p</mi><mo>&le;</mo><mi>b</mi><mi>e</mi><mi>l</mi><mi>o</mi><mi>w</mi><mi>i</mi><mi>m</mi><mi>p</mi><mo>&le;</mo><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>s</mi><mi>r</mi><mi>o</mi><mi>l</mi><mi>l</mi><mi>b</mi><mi>a</mi><mi>c</mi><mi>k</mi><mo>.</mo><mfrac><mo>&lt;</mo><mi>p</mi></mfrac><mo>&gt;</mo><mo>&lt;</mo><mi>p</mi><mi>r</mi><mi>e</mi><mo>&gt;</mo><mo>&lt;</mo><mi>c</mi><mi>o</mi><mi>d</mi><mi>e</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>n</mi><mi>d</mi><mi>e</mi><mrow><mi>f</mi><mo>&isin;</mo></mrow><mi>e</mi><mi>d</mi><mi>j</mi><mi>s</mi><mrow><mtext></mtext></mrow><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mi>v</mi><mi>a</mi><mi>r</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mi>c</mi><mi>u</mi><mi>r</mi><mi>r</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>P</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>o</mi><mi>n</mi><mi>E</mi><mo>&le;</mo><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mo>;</mo><mi>o</mi><mi>b</mi><mi>o</mi><mi>e</mi><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mi>e</mi><mi>v</mi><mi>e</mi><mi>r</mi><mi>y</mi><mi>o</mi><mo>&ne;</mo><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>)</mo></mrow><mo>.</mo><mi>p</mi><mi>a</mi><mi>t</mi><mi>h</mi><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mi>p</mi><mi>e</mi><mi>o</mi><mi>p</mi><mo>&le;</mo><mo>.</mo><mo>&sdot;</mo><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>,</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mrow><mi>f</mi><mi>u</mi></mrow><mi>n</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mrow><mo>(</mo><mo>)</mo></mrow><mrow><mo>{</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>o</mi><mi>m</mi><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mrow><mtext></mtext></mrow><mo>/</mo><mi>w</mi><mi>e</mi><mi>d</mi><mi>o</mi><mi>n</mi><mo>'</mo><mi>t</mi><mi>h</mi><mi>a</mi><mi>v</mi><mi>e</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>o</mi><mi>n</mi><mo>'</mo><mi>s</mi><mrow><mo>det</mo><mi>a</mi></mrow><mi>i</mi><mi>l</mi><mi>s</mi><mi>y</mi><mi>e</mi><mi>t</mi><mi>b</mi><mi>u</mi><mi>t</mi><mi>w</mi><mi>e</mi><mi>k</mi><mi>n</mi><mi>o</mi><mi>w</mi><mi>w</mi><mi>e</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>o</mi><mi>m</mi><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mrow><mtext></mtext></mrow><mo>/</mo><mrow><mi>f</mi><mi>o</mi></mrow><mi>u</mi><mi>n</mi><mi>d</mi><mi>s</mi><mi>o</mi><mi>m</mi><mi>e</mi><mi>o</mi><mo>&ne;</mo><mo>&isin;</mo><mi>t</mi><mi>h</mi><mi>e</mi><mi>j</mi><mi>s</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>t</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi><mo>,</mo><mi>w</mi><mi>e</mi><mi>c</mi><mi>a</mi><mi>n</mi><mi>u</mi><mi>s</mi><mi>e</mi><mi>t</mi><mi>h</mi><mi>i</mi><mi>s</mi><mo>&rarr;</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>o</mi><mi>m</mi><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mrow><mtext></mtext></mrow><mo>/</mo><mi>e</mi><mi>a</mi><mo>&ge;</mo><mi>r</mi><mi>l</mi><mi>y</mi><mi>a</mi><mi>d</mi><mi>d</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>m</mi><mo>&rarr;</mo><mi>t</mi><mi>h</mi><mi>e</mi><mi>p</mi><mi>a</mi><mo>&ge;</mo><mo>:</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mi>c</mi><mi>u</mi><mi>r</mi><mi>r</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>P</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>o</mi><mi>n</mi><mi>E</mi><mo>&le;</mo><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mo>=</mo></mrow></mrow>(<span class="string">'&lt;div class="person"&gt;'</span>);
+      <math title="(&lt;span class=" string"="">'#people').append(currentPersonElement); }) .node(<span class="string">'people.*.name'</span>, <span class="keyword">function</span>( name ){ <span class="comment">// we just found out that person's name, lets add it to</span> <span class="comment">// their div:</span> <span class="keyword">var</span> markup = <span class="string">'<span class="name">'</span> + name + <span class="string">'</span>'</span>; currentPersonElement.append(markup); }) .fail(<span class="keyword">function</span>(){ <span class="keyword">if</span>( currentPersonElement ) { <span class="comment">// oops, that didn't go so well. instead of leaving</span> <span class="comment">// this dude half on the page, remove them altogether</span> currentPersonElement.remove(); } })</math></code></pre> <h2 id="example-patterns">Example patterns</h2> <p>| Pattern | Meaning | |------------------------- |--------------| | <code>*</code> | Every object, string, number etc found in the json stream | <code>!</code> | The root object. Fired when the whole response is available, like JSON.parse() | <code>!.foods.colour</code> | The colours of the foods | <code>person.emails[1]</code> | The first element in the email array for each person | <code>{name email}</code> | Any object with a name and an email property, regardless of where it is in the document | <code>person.emails[*]</code> | Any element in the email array for each person | <code>person."><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mo>#</mo><mi>p</mi><mi>e</mi><mi>o</mi><mi>p</mi><mo>&le;</mo><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>)</mo></mrow><mo>.</mo><mi>a</mi><mi>p</mi><mi>p</mi><mi>e</mi><mi>n</mi><mi>d</mi><mrow><mo>(</mo><mi>c</mi><mi>u</mi><mi>r</mi><mi>r</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>P</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>o</mi><mi>n</mi><mi>E</mi><mo>&le;</mo><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mo>)</mo></mrow><mo>;</mo><mo>}</mo><mo>)</mo><mo>.</mo><mi>n</mi><mi>o</mi><mi>d</mi><mi>e</mi><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mi>p</mi><mi>e</mi><mi>o</mi><mi>p</mi><mo>&le;</mo><mo>.</mo><mo>&sdot;</mo><mo>.</mo><mi>n</mi><mi>a</mi><mi>m</mi><mi>e</mi><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>,</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mrow><mi>f</mi><mi>u</mi></mrow><mi>n</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mrow><mo>(</mo><mi>n</mi><mi>a</mi><mi>m</mi><mi>e</mi><mo>)</mo></mrow><mrow><mo>{</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>o</mi><mi>m</mi><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mrow><mtext></mtext></mrow><mo>/</mo><mi>w</mi><mi>e</mi><mi>j</mi><mi>u</mi><mi>s</mi><mi>t</mi><mrow><mi>f</mi><mi>o</mi></mrow><mi>u</mi><mi>n</mi><mi>d</mi><mi>o</mi><mi>u</mi><mi>t</mi><mi>t</mi><mover><mi>p</mi><mo>^</mo></mover><mi>e</mi><mi>r</mi><mi>s</mi><mi>o</mi><mi>n</mi><mo>'</mo><mi>s</mi><mi>n</mi><mi>a</mi><mi>m</mi><mi>e</mi><mo>,</mo><mo>&le;</mo><mi>t</mi><mi>s</mi><mi>a</mi><mi>d</mi><mi>d</mi><mi>i</mi><mi>t</mi><mo>&rarr;</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>o</mi><mi>m</mi><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mrow><mtext></mtext></mrow><mo>/</mo><mi>t</mi><mi>h</mi><mi>e</mi><mi>i</mi><mi>r</mi><mi>d</mi><mi>i</mi><mi>v</mi><mo>:</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mi>v</mi><mi>a</mi><mi>r</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mi>m</mi><mi>a</mi><mi>r</mi><mi>k</mi><mi>u</mi><mi>p</mi><mo>=</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>a</mi><mi>m</mi><mi>e</mi><mrow><mtext></mtext></mrow><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>+</mo><mi>n</mi><mi>a</mi><mi>m</mi><mi>e</mi><mo>+</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>t</mi><mi>r</mi><mo>&isin;</mo><mrow><mi>g</mi><mrow><mtext></mtext></mrow></mrow><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>'</mo><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>;</mo><mi>c</mi><mi>u</mi><mi>r</mi><mi>r</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>P</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>o</mi><mi>n</mi><mi>E</mi><mo>&le;</mo><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mo>.</mo><mi>a</mi><mi>p</mi><mi>p</mi><mi>e</mi><mi>n</mi><mi>d</mi><mrow><mo>(</mo><mi>m</mi><mi>a</mi><mi>r</mi><mi>k</mi><mi>u</mi><mi>p</mi><mo>)</mo></mrow><mo>;</mo><mo>}</mo></mrow><mo>)</mo></mrow><mo>.</mo><mrow><mi>f</mi><mi>a</mi></mrow><mi>i</mi><mi>l</mi><mrow><mo>(</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mrow><mi>f</mi><mi>u</mi></mrow><mi>n</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mrow><mo>(</mo><mo>)</mo></mrow><mrow><mo>{</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>e</mi><mi>y</mi><mi>w</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow><mi>d</mi><mrow><mtext></mtext></mrow><mrow><mspace width="1ex"></mspace><mo>if</mo><mspace width="1ex"></mspace></mrow><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mrow><mo>(</mo><mi>c</mi><mi>u</mi><mi>r</mi><mi>r</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>P</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>o</mi><mi>n</mi><mi>E</mi><mo>&le;</mo><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mo>)</mo></mrow><mrow><mo>{</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>o</mi><mi>m</mi><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mrow><mtext></mtext></mrow><mo>/</mo><mo>&infin;</mo><mi>p</mi><mi>s</mi><mo>,</mo><mi>t</mi><mover><mi>d</mi><mo>^</mo></mover><mi>i</mi><mi>d</mi><mi>n</mi><mo>'</mo><mi>t</mi><mrow><mi>g</mi><mi>o</mi></mrow><mi>s</mi><mi>o</mi><mi>w</mi><mi>e</mi><mi>l</mi><mi>l</mi><mo>.</mo><mo>&isin;</mo><mi>s</mi><mi>t</mi><mi>e</mi><mi>a</mi><mi>d</mi><mi>o</mi><mrow><mi>f</mi><mo>&le;</mo></mrow><mi>a</mi><mi>v</mi><mo>&isin;</mo><mfrac><mrow><mi>g</mi><mo>&lt;</mo></mrow><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>o</mi><mi>m</mi><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mrow><mtext></mtext></mrow><mo>/</mo><mi>t</mi><mi>h</mi><mi>i</mi><mi>s</mi><mi>d</mi><mi>u</mi><mi>d</mi><mi>e</mi><mi>h</mi><mi>a</mi><mi>l</mi><mrow><mi>f</mi><mi>o</mi></mrow><mi>n</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>p</mi><mi>a</mi><mo>&ge;</mo><mo>,</mo><mi>r</mi><mi>e</mi><mi>m</mi><mi>o</mi><mi>v</mi><mi>e</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>m</mi><mi>a</mi><mo>&lt;</mo><mi>o</mi><mo>&ge;</mo><mi>t</mi><mi>h</mi><mi>e</mi><mi>r</mi><mfrac><mo>&lt;</mo><mi>s</mi></mfrac><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mi>c</mi><mi>u</mi><mi>r</mi><mi>r</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>P</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>o</mi><mi>n</mi><mi>E</mi><mo>&le;</mo><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mo>.</mo><mi>r</mi><mi>e</mi><mi>m</mi><mi>o</mi><mi>v</mi><mi>e</mi><mrow><mo>(</mo><mo>)</mo></mrow><mo>;</mo><mo>}</mo></mrow><mo>}</mo></mrow><mo>)</mo></mrow><mfrac><mo>&lt;</mo><mi>c</mi></mfrac><mi>o</mi><mi>d</mi><mi>e</mi><mo>&gt;</mo><mfrac><mo>&lt;</mo><mi>p</mi></mfrac><mi>r</mi><mi>e</mi><mo>&gt;</mo><mo>&lt;</mo><mi>h</mi><mn>2</mn><mi>i</mi><mi>d</mi><mo>=</mo><mrow><mtext></mtext></mrow><mi>x</mi><mi>a</mi><mi>m</mi><mi>p</mi><mo>&le;</mo><mo>-</mo><mi>p</mi><mi>a</mi><mstyle fontfamily="monospace"><mi>e</mi></mstyle><mi>r</mi><mi>n</mi><mi>s</mi><mrow><mtext></mtext></mrow><mi>E</mi><mi>x</mi><mi>a</mi><mi>m</mi><mi>p</mi><mo>&le;</mo><mi>p</mi><mi>a</mi><mstyle fontfamily="monospace"><mi>e</mi></mstyle><mi>r</mi><mi>n</mi><mi>s</mi><mfrac><mo>&lt;</mo><mi>h</mi></mfrac><mn>2</mn><mo>&gt;</mo><mo>&lt;</mo><mi>p</mi><mo>&gt;</mo><mrow><mo>|</mo><mi>P</mi><mi>a</mi><mstyle fontfamily="monospace"><mi>e</mi></mstyle><mi>r</mi><mi>n</mi><mo>|</mo></mrow><mi>M</mi><mi>e</mi><mi>a</mi><mi>n</mi><mo>&isin;</mo><mi>g</mi><mrow><mo>|</mo><mo>&#8866;</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>&#8866;</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>-</mo><mo>|</mo></mrow><mrow><mo>|</mo><mo>&lt;</mo><mi>c</mi><mi>o</mi><mi>d</mi><mi>e</mi><mo>&gt;</mo><mo>&sdot;</mo><mfrac><mo>&lt;</mo><mi>c</mi></mfrac><mi>o</mi><mi>d</mi><mi>e</mi><mo>&gt;</mo><mo>|</mo></mrow><mi>E</mi><mi>v</mi><mi>e</mi><mi>r</mi><mi>y</mi><mi>o</mi><mi>b</mi><mi>j</mi><mi>e</mi><mi>c</mi><mi>t</mi><mo>,</mo><mi>s</mi><mi>t</mi><mi>r</mi><mo>&isin;</mo><mi>g</mi><mo>,</mo><mi>&nu;</mi><mi>m</mi><mi>b</mi><mi>e</mi><mi>r</mi><mi>e</mi><mi>t</mi><mi>c</mi><mrow><mi>f</mi><mi>o</mi></mrow><mi>u</mi><mi>n</mi><mi>d</mi><mo>&isin;</mo><mi>t</mi><mi>h</mi><mi>e</mi><mi>j</mi><mi>s</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>t</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi><mrow><mo>|</mo><mo>&lt;</mo><mi>c</mi><mi>o</mi><mi>d</mi><mi>e</mi><mo>&gt;</mo><mo>!</mo><mfrac><mo>&lt;</mo><mi>c</mi></mfrac><mi>o</mi><mi>d</mi><mi>e</mi><mo>&gt;</mo><mo>|</mo></mrow><mi>T</mi><mi>h</mi><mi>e</mi><mroot><mi>b</mi><mi>o</mi></mroot><mi>j</mi><mi>e</mi><mi>c</mi><mi>t</mi><mo>.</mo><mi>F</mi><mi>i</mi><mi>r</mi><mi>e</mi><mi>d</mi><mi>w</mi><mi>h</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>w</mi><mi>h</mi><mi>o</mi><mo>&le;</mo><mi>r</mi><mi>e</mi><mi>s</mi><mi>p</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>e</mi><mi>i</mi><mi>s</mi><mi>a</mi><mi>v</mi><mi>a</mi><mi>i</mi><mi>l</mi><mi>a</mi><mi>b</mi><mo>&le;</mo><mo>,</mo><mi>l</mi><mi>i</mi><mi>k</mi><mi>e</mi><mi>J</mi><mi>S</mi><mi>O</mi><mi>N</mi><mo>.</mo><mi>p</mi><mi>a</mi><mi>r</mi><mi>s</mi><mi>e</mi><mrow><mo>(</mo><mo>)</mo></mrow><mrow><mo>|</mo><mo>&lt;</mo><mi>c</mi><mi>o</mi><mi>d</mi><mi>e</mi><mo>&gt;</mo><mo>!</mo><mo>.</mo><mrow><mi>f</mi><mo>&infin;</mo></mrow><mi>d</mi><mi>s</mi><mo>.</mo><mi>c</mi><mi>o</mi><mi>l</mi><mi>o</mi><mi>u</mi><mi>r</mi><mfrac><mo>&lt;</mo><mi>c</mi></mfrac><mi>o</mi><mi>d</mi><mi>e</mi><mo>&gt;</mo><mo>|</mo></mrow><mi>T</mi><mi>h</mi><mi>e</mi><mi>c</mi><mi>o</mi><mi>l</mi><mi>o</mi><mi>u</mi><mi>r</mi><mi>s</mi><mi>o</mi><mrow><mi>f</mi><mi>t</mi></mrow><mi>h</mi><mi>e</mi><mrow><mi>f</mi><mo>&infin;</mo></mrow><mi>d</mi><mi>s</mi><mrow><mo>|</mo><mo>&lt;</mo><mi>c</mi><mi>o</mi><mi>d</mi><mi>e</mi><mo>&gt;</mo><mi>p</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>o</mi><mi>n</mi><mo>.</mo><mi>e</mi><mi>m</mi><mi>a</mi><mi>i</mi><mi>l</mi><mi>s</mi><mrow><mo>[</mo><mn>1</mn><mo>]</mo></mrow><mfrac><mo>&lt;</mo><mi>c</mi></mfrac><mi>o</mi><mi>d</mi><mi>e</mi><mo>&gt;</mo><mo>|</mo></mrow><mi>T</mi><mi>h</mi><mi>e</mi><mrow><mi>f</mi><mi>i</mi></mrow><mi>r</mi><mi>s</mi><mi>t</mi><mi>e</mi><mo>&le;</mo><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mo>&isin;</mo><mi>t</mi><mi>h</mi><mi>e</mi><mi>e</mi><mi>m</mi><mi>a</mi><mi>i</mi><mi>l</mi><mi>a</mi><mi>r</mi><mi>r</mi><mi>a</mi><mi>y</mi><mrow><mi>f</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow></mrow><mi>e</mi><mi>a</mi><mi>c</mi><mi>h</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>o</mi><mi>n</mi><mrow><mo>|</mo><mo>&lt;</mo><mi>c</mi><mi>o</mi><mi>d</mi><mi>e</mi><mo>&gt;</mo><mrow><mo>{</mo><mi>n</mi><mi>a</mi><mi>m</mi><mi>e</mi><mi>e</mi><mi>m</mi><mi>a</mi><mi>i</mi><mi>l</mi><mo>}</mo></mrow><mfrac><mo>&lt;</mo><mi>c</mi></mfrac><mi>o</mi><mi>d</mi><mi>e</mi><mo>&gt;</mo><mo>|</mo></mrow><mi>A</mi><mi>n</mi><mi>y</mi><mi>o</mi><mi>b</mi><mi>j</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>w</mi><mi>i</mi><mi>t</mi><mi>h</mi><mi>a</mi><mi>n</mi><mi>a</mi><mi>m</mi><mi>e</mi><mrow><mspace width="1ex"></mspace><mtext>and</mtext><mspace width="1ex"></mspace></mrow><mi>a</mi><mi>n</mi><mi>e</mi><mi>m</mi><mi>a</mi><mi>i</mi><mi>l</mi><mo>&prop;</mo><mi>e</mi><mi>r</mi><mi>t</mi><mi>y</mi><mo>,</mo><mi>r</mi><mi>e</mi><mrow><mi>g</mi><mi>a</mi></mrow><mi>r</mi><mi>d</mi><mo>&le;</mo><mi>s</mi><mi>s</mi><mi>o</mi><mrow><mi>f</mi><mi>w</mi></mrow><mi>h</mi><mi>e</mi><mi>r</mi><mi>e</mi><mi>i</mi><mi>t</mi><mi>i</mi><mi>s</mi><mo>&isin;</mo><mi>t</mi><mi>h</mi><mi>e</mi><mi>d</mi><mi>o</mi><mi>c</mi><mi>u</mi><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mrow><mo>|</mo><mo>&lt;</mo><mi>c</mi><mi>o</mi><mi>d</mi><mi>e</mi><mo>&gt;</mo><mi>p</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>o</mi><mi>n</mi><mo>.</mo><mi>e</mi><mi>m</mi><mi>a</mi><mi>i</mi><mi>l</mi><mi>s</mi><mrow><mo>[</mo><mo>&sdot;</mo><mo>]</mo></mrow><mfrac><mo>&lt;</mo><mi>c</mi></mfrac><mi>o</mi><mi>d</mi><mi>e</mi><mo>&gt;</mo><mo>|</mo></mrow><mi>A</mi><mi>n</mi><mi>y</mi><mi>e</mi><mo>&le;</mo><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mo>&isin;</mo><mi>t</mi><mi>h</mi><mi>e</mi><mi>e</mi><mi>m</mi><mi>a</mi><mi>i</mi><mi>l</mi><mi>a</mi><mi>r</mi><mi>r</mi><mi>a</mi><mi>y</mi><mrow><mi>f</mi><mrow><mspace width="1ex"></mspace><mtext>or</mtext><mspace width="1ex"></mspace></mrow></mrow><mi>e</mi><mi>a</mi><mi>c</mi><mi>h</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>o</mi><mi>n</mi><mrow><mo>&#8739;</mo></mrow><mo>&lt;</mo><mi>c</mi><mi>o</mi><mi>d</mi><mi>e</mi><mo>&gt;</mo><mi>p</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>o</mi><mi>n</mi><mo>.</mo>emails[*]</code>      | Any element in the email array for each person, but the callback will be passed the array so far rather than the array elements as they are found.
+| <code>person</code>                 | All people in the json, nested at any depth
+| <code>person.friends.*.name</code>  | Detecting friend names in a social network
+| <code>person.friends..{name}</code> | Detecting friends with names in a social network
+| <code>person..email</code>          | Email addresses anywhere as descendant of a person object
+| <code>person..{email}</code>        | Any object with an email address relating to a person in the stream
+| <code><math title="person..email&lt;/code&gt; | Any person in the json stream with an email address&lt;/p&gt;"><mi>p</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>o</mi><mi>n</mi><mo>.</mo><mo>.</mo><mi>e</mi><mi>m</mi><mi>a</mi><mi>i</mi><mi>l</mi><mfrac><mo>&lt;</mo><mi>c</mi></mfrac><mi>o</mi><mi>d</mi><mi>e</mi><mo>&gt;</mo><mrow><mo>&#8739;</mo></mrow><mi>A</mi><mi>n</mi><mi>y</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>o</mi><mi>n</mi><mo>&isin;</mo><mi>t</mi><mi>h</mi><mi>e</mi><mi>j</mi><mi>s</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>t</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi><mi>w</mi><mi>i</mi><mi>t</mi><mi>h</mi><mi>a</mi><mi>n</mi><mi>e</mi><mi>m</mi><mi>a</mi><mi>i</mi><mi>l</mi><mi>a</mi><mi>d</mi><mi>d</mi><mi>r</mi><mi>e</mi><mi>s</mi><mi>s</mi><mfrac><mo>&lt;</mo><mi>p</mi></mfrac><mo>&gt;</mo></math></code></p>
                    <h2 id="improve-this-page">Improve this page</h2>
 <p>Is this page clear enough? Typo-free? Could you improve it?</p>
 <p>Please fork the <a href="https://github.com/jimhigson/oboe.js-website">Oboe.js
