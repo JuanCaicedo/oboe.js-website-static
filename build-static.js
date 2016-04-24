@@ -42,25 +42,12 @@ const addRoot = R.curry(function(root, files) {
   R.forEach(addPropertyToFile('root', root, files), names);
 });
 
-const getListing = function(files) {
-  const listing = files.listing.contents.toString();
-  delete files.listing;
-  return R.split('\n', listing);
-};
-
-const formatPage = function(listing) {
-  const title = R.replace('.md', '', listing);
-  return {
-    title: title,
-    path: title
-  };
-};
-
 const addPages = function(files) {
-  const listing = getListing(files);
-  const pages = R.map(formatPage, listing);
+  const json = files['listing.json'].contents.toString();
+  const listing = JSON.parse(json);
+  delete files['listing.json'];
   const names = R.keys(files);
-  R.forEach(addPropertyToFile('pages', pages, files), names);
+  R.forEach(addPropertyToFile('pages', listing, files), names);
 };
 
 /* sidebar functions */
@@ -147,8 +134,6 @@ if (require.main === module) {
 module.exports = {
   fileIsNotScss: fileIsNotScss,
   excludeScss: excludeScss,
-  getListing: getListing,
-  formatPage: formatPage,
   addRoot: addRoot,
   addHeading: addHeading,
   addSections: addSections

@@ -42,39 +42,6 @@ describe('sass', function() {
 
 });
 
-describe('getListing', function() {
-
-  it('reads listing as an array', function() {
-    const files = {
-      listing: {
-        contents: "why.md\nexamples.md\napi.md\ndownload.md\ndiscuss.md\n"
-      }
-    };
-    const expected = [
-      'why.md',
-      'examples.md',
-      'api.md',
-      'download.md',
-      'discuss.md',
-      ''
-    ];
-    expect(build.getListing(files)).to.deep.eql(expected);
-  });
-
-});
-
-describe('formatPage', function() {
-
-  it('converts strings to objects', function() {
-    const listing = 'why.md';
-    expect(build.formatPage(listing)).to.eql({
-      title: 'why',
-      path: 'why'
-    });
-  });
-
-});
-
 describe('addRoot', function() {
 
   it('adds root variable to all files', function() {
